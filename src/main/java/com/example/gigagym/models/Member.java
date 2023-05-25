@@ -2,7 +2,9 @@ package com.example.gigagym.models;
 
 
 import jakarta.persistence.*;
-import java.time.LocalDate;
+
+import java.util.Date;
+
 
 @Entity
 @Table(name = "members")
@@ -32,15 +34,15 @@ public class Member {
     private int ptId;
 
     @Column(name = "startDate")
-    private LocalDate startDate;
+    private Date startDate;
 
     @Column(name = "endDate")
-    private LocalDate endDate;
+    private Date endDate;
 
     public Member() {
     }
 
-    public Member(String name, String sex, String address, String emailAddress, double charge, int ptId, LocalDate startDate, LocalDate endDate) {
+    public Member(String name, String sex, String address, String emailAddress, double charge, int ptId, Date startDate, Date endDate) {
         this.name = name;
         this.sex = sex;
         this.address=address;
@@ -52,7 +54,7 @@ public class Member {
     }
 
     public Integer getId() {
-        return id;
+        return this.id;
     }
 
     public void setId(Integer id) {
@@ -60,7 +62,7 @@ public class Member {
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public void setName(String name) {
@@ -68,7 +70,7 @@ public class Member {
     }
 
     public String getSex() {
-        return sex;
+        return this.sex;
     }
 
     public void setSex(String sex) {
@@ -76,7 +78,7 @@ public class Member {
     }
 
     public String getAddress() {
-        return address;
+        return this.address;
     }
 
     public void setAddress(String address) {
@@ -84,7 +86,7 @@ public class Member {
     }
 
     public String getEmailAddress() {
-        return emailAddress;
+        return this.emailAddress;
     }
 
     public void setEmailAddress(String emailAddress) {
@@ -92,7 +94,7 @@ public class Member {
     }
 
     public double getCharge() {
-        return charge;
+        return this.charge;
     }
 
     public void setCharge(double charge) {
@@ -100,26 +102,26 @@ public class Member {
     }
 
     public int getPtId() {
-        return ptId;
+        return this.ptId;
     }
 
     public void setPtId(int ptId) {
         this.ptId = ptId;
     }
 
-    public LocalDate getStartDate() {
-        return startDate;
+    public Date getStartDate() {
+        return this.startDate;
     }
 
-    public void setStartDate(LocalDate startDate) {
+    public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
 
-    public LocalDate getEndDate() {
-        return endDate;
+    public Date getEndDate() {
+        return this.endDate;
     }
 
-    public void setEndDate(LocalDate endDate) {
+    public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
 

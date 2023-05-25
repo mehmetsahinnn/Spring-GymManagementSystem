@@ -1,7 +1,6 @@
 package com.example.gigagym.models;
 
 import jakarta.persistence.*;
-import org.antlr.v4.runtime.misc.NotNull;
 
 import java.util.Date;
 
@@ -24,7 +23,7 @@ public class Staff {
     private String jobTitle;
 
     @Column(name = "daysOfWork")
-    private int daysOfWork;
+    private Integer daysOfWork;
 
     @Column(name = "startDate")
     private Date startDate;
@@ -34,7 +33,7 @@ public class Staff {
     public Staff() {
     }
 
-    public Staff(String name, String emailAddress, String jobTitle, int daysOfWork, Date startDate) {
+    public Staff(String name, String emailAddress, String jobTitle, Integer daysOfWork, Date startDate) {
         this.name = name;
         this.emailAddress = emailAddress;
         this.jobTitle = jobTitle;
@@ -75,11 +74,11 @@ public class Staff {
         this.jobTitle = jobTitle;
     }
 
-    public int getDaysOfWork() {
+    public Integer getDaysOfWork() {
         return daysOfWork;
     }
 
-    public void setDaysOfWork(int daysOfWork) {
+    public void setDaysOfWork(Integer daysOfWork) {
         this.daysOfWork = daysOfWork;
     }
 

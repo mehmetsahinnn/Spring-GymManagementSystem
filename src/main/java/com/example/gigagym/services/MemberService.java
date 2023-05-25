@@ -1,9 +1,8 @@
 package com.example.gigagym.services;
 
-
+import com.example.gigagym.models.Member;
 import com.example.gigagym.repositories.MemberRepository;
 import com.example.gigagym.util.DBConnection;
-
 import org.springframework.stereotype.Service;
 
 import java.sql.Connection;
@@ -11,7 +10,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
-
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 
 @Service
@@ -23,6 +24,10 @@ public class MemberService {
         this.memberRepository = memberRepository;
     }
 
+
+    public List<Member> listAll() {
+        return memberRepository.findAll();
+    }
 
     public double calculateTotalCharges() {
         double totalCharges = 0.0;
@@ -68,9 +73,24 @@ public class MemberService {
     }
 
     public int getNumberOfUsersRegisteredLastMonth() {
-        LocalDate currentDate = LocalDate.now();
-        LocalDate lastMonthStartDate = currentDate.minusMonths(1).withDayOfMonth(1);
-        LocalDate lastMonthEndDate = currentDate.minusMonths(1).withDayOfMonth(lastMonthStartDate.lengthOfMonth());
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.MONTH, -1);
+        cal.set(Calendar.DAY_OF_MONTH, 1);
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+        Date lastMonthStartDate = cal.getTime();
+
+        cal.set(Calendar.DAY_OF_MONTH, cal.getActualMaximum(Calendar.DAY_OF_MONTH));
+        cal.set(Calendar.HOUR_OF_DAY, 23);
+        cal.set(Calendar.MINUTE, 59);
+        cal.set(Calendar.SECOND, 59);
+        cal.set(Calendar.MILLISECOND, 999);
+        Date lastMonthEndDate = cal.getTime();
+
         return memberRepository.countByRegistrationDateBetween(lastMonthStartDate, lastMonthEndDate);
     }
+
+
 }
