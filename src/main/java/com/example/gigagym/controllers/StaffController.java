@@ -16,7 +16,7 @@ public class StaffController {
         this.staffService = staffService;
     }
 
-    @GetMapping("/table-2")
+    @GetMapping("/staff")
     public String staff(Model model) {
         List<Staff> listStaff = staffService.listAll();
         model.addAttribute("listStaff", listStaff);

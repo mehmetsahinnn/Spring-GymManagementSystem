@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Table - GymManagement</title>
+    <title>Members - GymManagement</title>
     <link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}">
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
@@ -32,9 +32,9 @@
                 <li class="nav-item"></li>
                 <li class="nav-item"></li>
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/table-1}" data-bs-target="equipment.html"><i
+                    <a class="nav-link" th:href="@{/equipment}" data-bs-target="equipment.html"><i
                             class="fas fa-table"></i><span>Equipment</span></a>
-                    <a class="nav-link" th:href="@{/table-2}" data-bs-target="staff.html"><i
+                    <a class="nav-link" th:href="@{/staff}" data-bs-target="staff.html"><i
                             class="fas fa-table"></i><span>Staff</span></a>
                 </li>
             </ul>
@@ -198,19 +198,21 @@
                 <h3 class="text-dark mb-4">Members</h3>
                 <div class="card shadow">
                     <div class="card-header py-3">
-                        <p class="text-primary m-0 fw-bold">Employee Info</p>
+                        <p class="text-primary m-0 fw-bold">Member Info</p>
                     </div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-6 text-nowrap">
-                                <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable"><label
-                                        class="form-label">Show&nbsp;<select
-                                        class="d-inline-block form-select form-select-sm">
-                                    <option value="10" selected="">10</option>
-                                    <option value="25">25</option>
-                                    <option value="50">50</option>
-                                    <option value="100">100</option>
-                                </select>&nbsp;</label></div>
+                                <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable">
+                                    <label class="form-label">Show&nbsp;
+                                        <select class="d-inline-block form-select form-select-sm"
+                                                onchange="changePageSize(this.value)">
+                                            <option value="250" th:selected="${page.size == 250}">250</option>
+                                            <option value="500" th:selected="${page.size == 500}">500</option>
+                                            <option value="1000" th:selected="${page.size == 1000}">1000</option>
+                                        </select>&nbsp;
+                                    </label>
+                                </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="text-md-end dataTables_filter" id="dataTable_filter"><label
@@ -221,7 +223,7 @@
                         </div>
                         <div class="table-responsive table mt-2" id="dataTable" role="grid"
                              aria-describedby="dataTable_info">
-                            <table class="table my-0" id="dataTable">
+                            <table class="table my-0">
                                 <thead>
                                 <tr>
                                     <th>Id</th>
@@ -293,6 +295,7 @@
 <script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
 <script th:src="@{/js/bs-init.js}"></script>
 <script th:src="@{/js/theme.js}"></script>
+<script th:src="@{/js/changePageSize.js}"></script>
 </body>
 
 </html>

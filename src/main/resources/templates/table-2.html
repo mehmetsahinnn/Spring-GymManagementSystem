@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Table - GymManagement</title>
+    <title>Staff - GymManagement</title>
     <link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}">
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
@@ -32,9 +32,9 @@
                 <li class="nav-item"></li>
                 <li class="nav-item"></li>
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/table-1}" data-bs-target="equipment.html"><i
+                    <a class="nav-link" th:href="@{/equipment}" data-bs-target="equipment.html"><i
                             class="fas fa-table"></i><span>Equipment</span></a>
-                    <a class="nav-link active" th:href="@{/table-2}" data-bs-target="staff.html"><i
+                    <a class="nav-link active" th:href="@{/staff}" data-bs-target="staff.html"><i
                             class="fas fa-table"></i><span>Staff</span></a>
                 </li>
             </ul>
@@ -249,7 +249,7 @@
                         <div class="row">
                             <div class="col-md-6 align-self-center">
                                 <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">Showing
-                                    1 to 10 of 27</p>
+                                    1 to 5 of 5</p>
                             </div>
                             <div class="col-md-6">
                                 <nav class="d-lg-flex justify-content-lg-end dataTables_paginate paging_simple_numbers">
@@ -257,9 +257,7 @@
                                         <li class="page-item disabled"><a class="page-link" aria-label="Previous"
                                                                           href="#"><span aria-hidden="true">«</span></a>
                                         </li>
-                                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                        <li class="page-item active"><a class="page-link" th:href="@{/staff}">1</a></li>
                                         <li class="page-item"><a class="page-link" aria-label="Next" href="#"><span
                                                 aria-hidden="true">»</span></a></li>
                                     </ul>
