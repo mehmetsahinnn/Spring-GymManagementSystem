@@ -18,7 +18,7 @@ public class GigagymApplication {
     public DBConnection dbConnection() {
         DBConnection dbConnection = new DBConnection();
         try {
-            DBConnection.connect("jdbc:mysql://localhost:3306/gym?useSSL=false&serverTimezone=UTC", "", "");
+            DBConnection.connect("jdbc:mysql://localhost:3306/gym?useSSL=false&serverTimezone=UTC", "YOUR_USERNAME", "YOUR_PASSWORD");
         } catch (SQLException e) {
             e.printStackTrace();
         }
