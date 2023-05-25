@@ -279,6 +279,16 @@
 <script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
 <script th:src="@{/js/bs-init.js}"></script>
 <script th:src="@{/js/theme.js}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+    $('.scroll-to-top').click(function(e){
+        e.preventDefault();
+        $('html, body').animate({scrollTop : 0},800);
+        return false;
+    });
+});
+</script>
 </body>
 
 </html>

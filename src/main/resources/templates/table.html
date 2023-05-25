@@ -125,7 +125,7 @@
                                     <h6 class="dropdown-header">alerts center</h6><a
                                         class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image me-3"><img class="rounded-circle"
-                                                                               src="/static/img/avatars/avatar4.jpeg">
+                                                                               th:src="@{/img/avatars/avatar1.jpeg}">
                                         <div class="bg-success status-indicator"></div>
                                     </div>
                                     <div class="fw-bold">
@@ -135,7 +135,7 @@
                                     </div>
                                 </a><a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image me-3"><img class="rounded-circle"
-                                                                               src="/static/img/avatars/avatar2.jpeg">
+                                                                               th:src="@{/img/avatars/avatar1.jpeg}">
                                         <div class="status-indicator"></div>
                                     </div>
                                     <div class="fw-bold">
@@ -145,7 +145,7 @@
                                     </div>
                                 </a><a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image me-3"><img class="rounded-circle"
-                                                                               src="/static/img/avatars/avatar3.jpeg">
+                                                                               th:src="@{/img/avatars/avatar1.jpeg}">
                                         <div class="bg-warning status-indicator"></div>
                                     </div>
                                     <div class="fw-bold">
@@ -155,7 +155,7 @@
                                     </div>
                                 </a><a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image me-3"><img class="rounded-circle"
-                                                                               src="/static/img/avatars/avatar5.jpeg">
+                                                                               th:src="@{/img/avatars/avatar1.jpeg}">
                                         <div class="bg-success status-indicator"></div>
                                     </div>
                                     <div class="fw-bold">
@@ -177,7 +177,7 @@
                                                                        href="#"><span
                                     class="d-none d-lg-inline me-2 text-gray-600 small">Mehmet Sahin</span><img
                                     class="border rounded-circle img-profile"
-                                    src="/static/img/avatars/avatar1.jpeg"></a>
+                                    th:src="@{/img/avatars/avatar1.jpeg}"></a>
                                 <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in"><a
                                         class="dropdown-item" href="#"><i
                                         class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Profile</a><a
@@ -296,6 +296,16 @@
 <script th:src="@{/js/bs-init.js}"></script>
 <script th:src="@{/js/theme.js}"></script>
 <script th:src="@{/js/changePageSize.js}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+    $('.scroll-to-top').click(function(e){
+        e.preventDefault();
+        $('html, body').animate({scrollTop : 0},800);
+        return false;
+    });
+});
+</script>
 </body>
 
 </html>

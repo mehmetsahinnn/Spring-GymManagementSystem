@@ -178,7 +178,7 @@
                     </div>
                     <p class="text-dark mb-5 lead">Page Not Found</p>
                     <p class="text-black-50 mb-0">It looks like you found a glitch in the matrix...</p>
-                    <a th:href="@{/dashboard}">← Back to Dashboard</a>
+                    <a th:href="@{/home}">← Back to Dashboard</a>
                 </div>
             </div>
         </div>
@@ -197,5 +197,15 @@
 <script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
 <script th:src="@{/js/bs-init.js}"></script>
 <script th:src="@{/js/theme.js}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+    $('.scroll-to-top').click(function(e){
+        e.preventDefault();
+        $('html, body').animate({scrollTop : 0},800);
+        return false;
+    });
+});
+</script>
 </body>
 </html>
