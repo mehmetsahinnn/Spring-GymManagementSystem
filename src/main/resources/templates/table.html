@@ -264,15 +264,14 @@
                                     <ul class="pagination">
                                         <li class="page-item" th:classappend="${page.first ? 'disabled' : ''}">
                                             <a class="page-link"
-                                               th:href="@{/members(page=${page.number - 1})}">Previous</a>
+                                               th:href="@{/table(page=${page.number - 1})}">Previous</a>
                                         </li>
                                         <li class="page-item" th:each="i : ${#numbers.sequence(0, page.totalPages - 1)}"
                                             th:classappend="${i == page.number ? 'active' : ''}">
-                                            <a class="page-link" th:href="@{/members(page=${i})}"
-                                               th:text="${i + 1}"></a>
+                                            <a class="page-link" th:href="@{/table(page=${i})}" th:text="${i + 1}"></a>
                                         </li>
                                         <li class="page-item" th:classappend="${page.last ? 'disabled' : ''}">
-                                            <a class="page-link" th:href="@{/members(page=${page.number + 1})}">Next</a>
+                                            <a class="page-link" th:href="@{/table(page=${page.number + 1})}">Next</a>
                                         </li>
                                     </ul>
                                 </nav>
