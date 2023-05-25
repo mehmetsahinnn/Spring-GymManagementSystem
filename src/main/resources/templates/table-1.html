@@ -254,15 +254,16 @@
                                 <nav class="d-lg-flex justify-content-lg-end dataTables_paginate paging_simple_numbers">
                                     <ul class="pagination">
                                         <li class="page-item" th:classappend="${equipment.first ? 'disabled' : ''}">
-                                            <a class="page-link"
-                                               th:href="@{/equipment(page=${equipment.number - 1})}">Previous</a>
+                                            <a class="page-link" th:href="@{/equipment(page=${equipment.number - 1})}">Previous</a>
                                         </li>
-                                        <li class="page-item" th:each="i : ${#numbers.sequence(0, equipment.totalPages - 1)}"
+                                        <li class="page-item"
+                                            th:each="i : ${#numbers.sequence(0, equipment.totalPages - 1)}"
                                             th:classappend="${i == equipment.number ? 'active' : ''}">
-                                            <a class="page-link" th:href="@{/equipment(page=${i})}" th:text="${i + 1}"></a>
+                                            <a class="page-link" th:href="@{/equipment(page=${i})}"
+                                               th:text="${i + 1}"></a>
                                         </li>
                                         <li class="page-item" th:classappend="${equipment.last ? 'disabled' : ''}">
-                                            <a class="page-link" th:href="@{/table(page=${equipment.number + 1})}">Next</a>
+                                            <a class="page-link" th:href="@{/equipment(page=${equipment.number + 1})}">Next</a>
                                         </li>
                                     </ul>
                                 </nav>
