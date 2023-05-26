@@ -34,9 +34,14 @@
                 <li class="nav-item">
                     <a class="nav-link" th:href="@{/equipment}" data-bs-target="equipment.html"><i
                             class="fas fa-table"></i><span>Equipment</span></a>
+                    <a class="nav-link" th:href="@{/maintenance}">
+                        <i class="fas fa-table"></i><span>Maintenance</span>
+                    </a>
                     <a class="nav-link active" th:href="@{/staff}" data-bs-target="staff.html"><i
-                            class="fas fa-table"></i><span>Staff</span></a>
+                            class="fas fa-table"></i><span>Staff</span></a><a class="nav-link" th:href="@{/profile}"><i
+                        class="fas fa-user"></i><span>Profile</span></a>
                 </li>
+
             </ul>
             <div class="text-center d-none d-md-inline">
                 <button class="btn rounded-circle border-0" id="sidebarToggle" type="button"></button>
@@ -175,7 +180,7 @@
                             <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link"
                                                                        aria-expanded="false" data-bs-toggle="dropdown"
                                                                        href="#"><span
-                                    class="d-none d-lg-inline me-2 text-gray-600 small">Mehmet Sahin</span><img
+                                    class="d-none d-lg-inline me-2 text-gray-600 small" th:text="${StaffName}"></span><img
                                     class="border rounded-circle img-profile"
                                     th:src="@{/img/avatars/avatar1.jpeg}"></a>
                                 <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in"><a
@@ -186,7 +191,7 @@
                                         class="dropdown-item" href="#"><i
                                         class="fas fa-list fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Activity log</a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#"><i
+                                    <a class="dropdown-item" th:href="@{/}"><i
                                             class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Logout</a>
                                 </div>
                             </div>
@@ -233,8 +238,8 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-<!--                                <img class="rounded-circle me-2" width="30" height="30"-->
-<!--                                             th:src="@{/img/avatars/avatar1.jpeg}">-->
+                                <!--                                <img class="rounded-circle me-2" width="30" height="30"-->
+                                <!--                                             th:src="@{/img/avatars/avatar1.jpeg}">-->
                                 <tr th:each="staff : ${listStaff}">
                                     <td th:text="${staff.id}"></td>
                                     <td th:text="${staff.name}"></td>
@@ -281,13 +286,13 @@
 <script th:src="@{/js/theme.js}"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
-$(document).ready(function(){
-    $('.scroll-to-top').click(function(e){
-        e.preventDefault();
-        $('html, body').animate({scrollTop : 0},800);
-        return false;
+    $(document).ready(function () {
+        $('.scroll-to-top').click(function (e) {
+            e.preventDefault();
+            $('html, body').animate({scrollTop: 0}, 800);
+            return false;
+        });
     });
-});
 </script>
 </body>
 
