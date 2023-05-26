@@ -2,6 +2,7 @@ package com.example.gigagym.controllers;
 
 import com.example.gigagym.models.Member;
 import com.example.gigagym.repositories.MemberRepository;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -22,12 +23,16 @@ public class MemberController {
     }
 
     @GetMapping("/table")
-    public String table(Model model, @PageableDefault(size = 250) Pageable pageable) {
+    public String table(Model model, @PageableDefault(size = 250) Pageable pageable, HttpSession session) {
+        String StaffName = (String) session.getAttribute("StaffName");
+        model.addAttribute("StaffName", StaffName);
 
         Page<Member> page = memberRepository.findAll(pageable);
         model.addAttribute("page", page);
 
         return "table";
     }
+
+
 }
 

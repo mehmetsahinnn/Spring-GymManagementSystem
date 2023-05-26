@@ -15,6 +15,7 @@ public interface EquipmentRepository extends JpaRepository<Equipment, Long> {
 
     Page<Equipment> findAll(Pageable pageable);
 
+
     @Query("SELECT e.type, COUNT(e.type) FROM Equipment e GROUP BY e.type ORDER BY COUNT(e.type) DESC")
     List<Object[]> countEquipmentByType();
 

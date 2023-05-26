@@ -92,5 +92,25 @@ public class MemberService {
         return memberRepository.countByRegistrationDateBetween(lastMonthStartDate, lastMonthEndDate);
     }
 
+    public double getMaleRatio() {
+        long maleCount = memberRepository.countBySex("male");
+        long totalCount = memberRepository.count();
+
+        if (totalCount > 0) {
+            return (double) maleCount / totalCount;
+        } else {
+            return 0.0;
+        }
+    }
+
+    public double getFemaleRatio() {
+        long femaleCount = memberRepository.countBySex("female");
+        long totalCount = memberRepository.count();
+        if (totalCount > 0) {
+            return (double) femaleCount / totalCount;
+        } else {
+            return 0.0;
+        }
+    }
 
 }

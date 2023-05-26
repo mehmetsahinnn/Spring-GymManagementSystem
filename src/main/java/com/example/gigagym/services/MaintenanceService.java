@@ -17,10 +17,4 @@ public class MaintenanceService {
         this.maintenanceRepository = maintenanceRepository;
     }
 
-    public int getUpcomingMaintenanceEquipmentCount() {
-        LocalDate localDate = LocalDate.now();
-        Date date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
-
-        return maintenanceRepository.countEquipmentWithUpcomingMaintenance(date);
-    }
 }
