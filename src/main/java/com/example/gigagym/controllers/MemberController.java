@@ -26,13 +26,18 @@ public class MemberController {
     public String table(Model model, @PageableDefault(size = 250) Pageable pageable, HttpSession session) {
         String StaffName = (String) session.getAttribute("StaffName");
         model.addAttribute("StaffName", StaffName);
+        String JobTitle = (String) session.getAttribute("JobTitle");
 
         Page<Member> page = memberRepository.findAll(pageable);
         model.addAttribute("page", page);
 
-        return "table";
+        if ("Maintenance Guy".equals(JobTitle)  ) {
+
+            return "redirect:/maintenance";
+        }
+        else {
+            return "table";
+        }
     }
-
-
 }
 

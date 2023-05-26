@@ -20,9 +20,21 @@ public class StaffController {
     @GetMapping("/staff")
     public String staff(Model model, HttpSession session) {
         String StaffName = (String) session.getAttribute("StaffName");
+        String JobTitle = (String) session.getAttribute("JobTitle");
         model.addAttribute("StaffName", StaffName);
+
         List<Staff> listStaff = staffService.listAll();
         model.addAttribute("listStaff", listStaff);
-        return "table-2";
+
+        if ("Maintenance Guy".equals(JobTitle)) {
+
+            return "redirect:/maintenance";
+        }
+        else if ("Personal Trainer".equals(JobTitle)){
+            return "redirect:/home";
+        }
+        else {
+            return "table-2";
+        }
     }
 }

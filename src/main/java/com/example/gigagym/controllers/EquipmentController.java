@@ -25,20 +25,38 @@ public class EquipmentController {
     @GetMapping("/equipment")
     public String table1(Model model, @PageableDefault(size = 100) Pageable pageable, HttpSession session) {
         String StaffName = (String) session.getAttribute("StaffName");
+        String JobTitle = (String) session.getAttribute("JobTitle");
+
         model.addAttribute("StaffName", StaffName);
         Page<Equipment> equipment = equipmentRepository.findAll(pageable);
         model.addAttribute("equipment", equipment);
 
-        return "table-1";
+        if ("Maintenance Guy".equals(JobTitle)) {
+
+            return "redirect:/maintenance";
+        }
+        else if ("Personal Trainer".equals(JobTitle)){
+            return "redirect:/home";
+        }
+        else {
+            return "table-1";
+        }
     }
 
     @GetMapping("/maintenance")
     public String maintenance(Model model, @PageableDefault(size = 100) Pageable pageable, HttpSession session) {
         String StaffName = (String) session.getAttribute("StaffName");
+        String JobTitle = (String) session.getAttribute("JobTitle");
         model.addAttribute("StaffName", StaffName);
         Page<Maintenance> maintenance = maintenanceRepository.findAll(pageable);
         model.addAttribute("maintenance", maintenance);
-        return "maintenance";
+
+        if ("Personal Trainer".equals(JobTitle)){
+            return "redirect:/home";
+        }
+        else {
+            return "maintenance";
+        }
     }
 
 }
