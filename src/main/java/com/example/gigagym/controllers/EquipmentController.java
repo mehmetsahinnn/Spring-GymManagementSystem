@@ -4,6 +4,7 @@ import com.example.gigagym.models.Equipment;
 import com.example.gigagym.models.Maintenance;
 import com.example.gigagym.repositories.EquipmentRepository;
 import com.example.gigagym.repositories.MaintenanceRepository;
+import com.example.gigagym.services.MaintenanceService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,10 +17,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class EquipmentController {
     final EquipmentRepository equipmentRepository;
     final MaintenanceRepository maintenanceRepository;
+    private final MaintenanceService maintenanceService;
 
-    public EquipmentController(EquipmentRepository equipmentRepository, MaintenanceRepository maintenanceRepository) {
+    public EquipmentController(EquipmentRepository equipmentRepository, MaintenanceRepository maintenanceRepository, MaintenanceService maintenanceService) {
         this.equipmentRepository = equipmentRepository;
         this.maintenanceRepository = maintenanceRepository;
+        this.maintenanceService = maintenanceService;
     }
 
     @GetMapping("/equipment")
@@ -39,7 +42,7 @@ public class EquipmentController {
             return "redirect:/home";
         }
         else {
-            return "table-1";
+            return "equipment";
         }
     }
 
@@ -48,7 +51,8 @@ public class EquipmentController {
         String StaffName = (String) session.getAttribute("StaffName");
         String JobTitle = (String) session.getAttribute("JobTitle");
         model.addAttribute("StaffName", StaffName);
-        Page<Maintenance> maintenance = maintenanceRepository.findAll(pageable);
+
+        Page<Maintenance> maintenance = maintenanceService.getMaintenancesForNextWeek(pageable);
         model.addAttribute("maintenance", maintenance);
 
         if ("Personal Trainer".equals(JobTitle)){

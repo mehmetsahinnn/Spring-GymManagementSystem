@@ -1,10 +1,13 @@
 package com.example.gigagym.services;
 
+import com.example.gigagym.models.Payment;
 import com.example.gigagym.repositories.PaymentRepository;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 public class PaymentService {
@@ -27,4 +30,9 @@ public class PaymentService {
 
         return totalPayment / 5;
     }
+
+    public List<Payment> listPayment(){
+        return paymentRepository.findAll();
+    }
+
 }

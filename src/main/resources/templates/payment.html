@@ -4,12 +4,301 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Equipment-Maintenance - GymManagement</title>
+    <title>Staff-Payment - GymManagement</title>
     <link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}">
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
     <link rel="stylesheet" th:href="@{/fonts/fontawesome-all.min.css}">
     <link rel="stylesheet" th:href="@{/css/untitled.css}">
+    <style>
+        :root {
+            /* color type A */
+            /*--line_color: #555555;*/
+            /*--back_color: #FFECF6;*/
+
+            /* color type B */
+            /*--line_color : #1b1919 ;*/
+            /*--back_color : #E9ECFF  ;*/
+
+             /*color type C */
+             -line_color : #00135C ;
+            --back_color : #DEFFFA  ;
+        }
+
+        .button {
+            position: relative;
+            z-index: 0;
+            width: 240px;
+            height: 56px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: bold;
+            color: var(--line_color);
+            letter-spacing: 2px;
+            transition: all .3s ease;
+        }
+
+        .button__text {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+        }
+
+        .button::before,
+        .button::after,
+        .button__text::before,
+        .button__text::after {
+            content: '';
+            position: absolute;
+            height: 3px;
+            border-radius: 2px;
+            background: var(--line_color);
+            transition: all .5s ease;
+        }
+
+        .button::before {
+            top: 0;
+            left: 54px;
+            width: calc(100% - 56px * 2 - 16px);
+        }
+
+        .button::after {
+            top: 0;
+            right: 54px;
+            width: 8px;
+        }
+
+        .button__text::before {
+            bottom: 0;
+            right: 54px;
+            width: calc(100% - 56px * 2 - 16px);
+        }
+
+        .button__text::after {
+            bottom: 0;
+            left: 54px;
+            width: 8px;
+        }
+
+        .button__line {
+            position: absolute;
+            top: 0;
+            width: 56px;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .button__line::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            width: 150%;
+            height: 100%;
+            box-sizing: border-box;
+            border-radius: 300px;
+            border: solid 3px var(--line_color);
+        }
+
+        .button__line:nth-child(1),
+        .button__line:nth-child(1)::before {
+            left: 0;
+        }
+
+        .button__line:nth-child(2),
+        .button__line:nth-child(2)::before {
+            right: 0;
+        }
+
+        .button:hover {
+            letter-spacing: 6px;
+        }
+
+        .button:hover::before,
+        .button:hover .button__text::before {
+            width: 8px;
+        }
+
+        .button:hover::after,
+        .button:hover .button__text::after {
+            width: calc(100% - 56px * 2 - 16px);
+        }
+
+        .button__drow1,
+        .button__drow2 {
+            position: absolute;
+            z-index: -1;
+            border-radius: 16px;
+            transform-origin: 16px 16px;
+        }
+
+        .button__drow1 {
+            top: -16px;
+            left: 40px;
+            width: 32px;
+            height: 0;
+            transform: rotate(30deg);
+        }
+
+        .button__drow2 {
+            top: 44px;
+            left: 77px;
+            width: 32px;
+            height: 0;
+            transform: rotate(-127deg);
+        }
+
+        .button__drow1::before,
+        .button__drow1::after,
+        .button__drow2::before,
+        .button__drow2::after {
+            content: '';
+            position: absolute;
+        }
+
+        .button__drow1::before {
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 32px;
+            border-radius: 16px;
+            transform-origin: 16px 16px;
+            transform: rotate(-60deg);
+        }
+
+        .button__drow1::after {
+            top: -10px;
+            left: 45px;
+            width: 0;
+            height: 32px;
+            border-radius: 16px;
+            transform-origin: 16px 16px;
+            transform: rotate(69deg);
+        }
+
+        .button__drow2::before {
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 32px;
+            border-radius: 16px;
+            transform-origin: 16px 16px;
+            transform: rotate(-146deg);
+        }
+
+        .button__drow2::after {
+            bottom: 26px;
+            left: -40px;
+            width: 0;
+            height: 32px;
+            border-radius: 16px;
+            transform-origin: 16px 16px;
+            transform: rotate(-262deg);
+        }
+
+        .button__drow1,
+        .button__drow1::before,
+        .button__drow1::after,
+        .button__drow2,
+        .button__drow2::before,
+        .button__drow2::after {
+            background: var(--back_color);
+        }
+
+        .button:hover .button__drow1 {
+            animation: drow1 ease-in .06s;
+            animation-fill-mode: forwards;
+        }
+
+        .button:hover .button__drow1::before {
+            animation: drow2 linear .08s .06s;
+            animation-fill-mode: forwards;
+        }
+
+        .button:hover .button__drow1::after {
+            animation: drow3 linear .03s .14s;
+            animation-fill-mode: forwards;
+        }
+
+        .button:hover .button__drow2 {
+            animation: drow4 linear .06s .2s;
+            animation-fill-mode: forwards;
+        }
+
+        .button:hover .button__drow2::before {
+            animation: drow3 linear .03s .26s;
+            animation-fill-mode: forwards;
+        }
+
+        .button:hover .button__drow2::after {
+            animation: drow5 linear .06s .32s;
+            animation-fill-mode: forwards;
+        }
+
+        @keyframes drow1 {
+            0% {
+                height: 0;
+            }
+            100% {
+                height: 100px;
+            }
+        }
+
+        @keyframes drow2 {
+            0% {
+                width: 0;
+                opacity: 0;
+            }
+            10% {
+                opacity: 0;
+            }
+            11% {
+                opacity: 1;
+            }
+            100% {
+                width: 120px;
+            }
+        }
+
+        @keyframes drow3 {
+            0% {
+                width: 0;
+            }
+            100% {
+                width: 80px;
+            }
+        }
+
+        @keyframes drow4 {
+            0% {
+                height: 0;
+            }
+            100% {
+                height: 120px;
+            }
+        }
+
+        @keyframes drow5 {
+            0% {
+                width: 0;
+            }
+            100% {
+                width: 124px;
+            }
+        }
+
+
+        /* 本体には関係ないスタイル */
+        .container {
+            width: 100%;
+            height: 70px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
+        }
+    </style>
 </head>
 
 <body id="page-top">
@@ -33,10 +322,10 @@
                 <li class="nav-item">
                     <a class="nav-link" th:href="@{/equipment}" data-bs-target="equipment.html"><i
                             class="fas fa-table"></i><span>Equipment</span></a>
-                    <a class="nav-link active" th:href="@{/maintenance}">
+                    <a class="nav-link" th:href="@{/maintenance}">
                         <i class="fas fa-table"></i><span>Maintenance</span>
                     </a>
-                    <a class="nav-link " th:href="@{/payment}">
+                    <a class="nav-link active" th:href="@{/payment}">
                         <i class="fas fa-table"></i><span>Payment</span>
                     </a>
                     <a class="nav-link" th:href="@{/staff}" data-bs-target="staff.html"><i
@@ -180,7 +469,8 @@
                             <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link"
                                                                        aria-expanded="false" data-bs-toggle="dropdown"
                                                                        href="#"><span
-                                    class="d-none d-lg-inline me-2 text-gray-600 small" th:text="${StaffName}"></span><img
+                                    class="d-none d-lg-inline me-2 text-gray-600 small"
+                                    th:text="${StaffName}"></span><img
                                     class="border rounded-circle img-profile"
                                     th:src="@{/img/avatars/avatar1.jpeg}"></a>
                                 <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in"><a
@@ -212,9 +502,9 @@
                                         class="form-label">Show&nbsp;
                                     <select class="d-inline-block form-select form-select-sm"
                                             onchange="changeEquipmentSize(this.value)">
-                                        <option value="50" th:selected="${maintenance.size == 50}">50</option>
-                                        <option value="100" th:selected="${maintenance.size == 100}">100</option>
-                                        <option value="250" th:selected="${maintenance.size == 250}">250</option>
+                                        <option value="20" th:selected="${payment.size == 20}">20</option>
+                                        <option value="50" th:selected="${payment.size == 50}">50</option>
+                                        <option value="100" th:selected="${payment.size == 100}">100</option>
                                     </select>&nbsp;
                                     &nbsp;</label></div>
                             </div>
@@ -231,47 +521,54 @@
                                 <thead>
                                 <tr>
                                     <th>Id</th>
-                                    <th>EQID</th>
-                                    <th>MID</th>
-                                    <th>Date Of Maintenance</th>
-                                    <th>Date Of Next Maintenance</th>
+                                    <th>SID</th>
+                                    <th>Salary</th>
+                                    <th>Payment Status</th>
+                                    <th>Payment Date</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr th:each="maintenance : ${maintenance}">
-                                    <td th:text="${maintenance.id}"></td>
-                                    <td th:text="${maintenance.equipmentId}"></td>
-                                    <td th:text="${maintenance.maintenanceId}"></td>
-                                    <td th:text="${#dates.format(maintenance.dateOfMaintenance, 'yyyy-MM-dd')}"></td>
-                                    <td th:text="${#dates.format(maintenance.dateOfNextMaintenance, 'yyyy-MM-dd')}"></td>
+                                <tr th:each="payment : ${payment}">
+                                    <td th:text="${payment.id}"></td>
+                                    <td th:text="${payment.SID}"></td>
+                                    <td th:text="${payment.salary}"></td>
+
+                                    <td th:if="${payment.paymentStatus == 0}">
+                                        <span th:text="${payment.paymentStatus}"></span>
+                                        <div class="container">
+                                            <a href="#" class="button">
+                                                <div class="button__line"></div>
+                                                <div class="button__line"></div>
+                                                <span class="button__text">Pay Salary</span>
+                                                <div class="button__drow1"></div>
+                                                <div class="button__drow2"></div>
+                                            </a>
+                                        </div>
+                                    </td>
+                                    <td th:unless="${payment.paymentStatus == 0}">
+                                        <span th:text="${payment.paymentStatus}"></span>
+                                    </td>
+
+                                    <td th:text="${#dates.format(payment.paymentDate, 'yyyy-MM-dd')}"></td>
                                 </tr>
                                 </tbody>
                             </table>
                         </div>
                         <div class="row">
                             <div class="col-md-6 align-self-center">
-                                <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">
-                                    Showing <span th:text="${maintenance.number * maintenance.size + 1}"></span>
-                                    to <span
-                                        th:text="${(maintenance.number + 1) * maintenance.size > maintenance.totalElements ? maintenance.totalElements : (maintenance.number + 1) * maintenance.size}"></span>
-                                    of <span th:text="${maintenance.totalElements}"></span>
-                                </p>
+                                <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">Showing
+                                    1 to 23 of 23</p>
                             </div>
                             <div class="col-md-6">
                                 <nav class="d-lg-flex justify-content-lg-end dataTables_paginate paging_simple_numbers">
                                     <ul class="pagination">
-                                        <li class="page-item" th:classappend="${maintenance.first ? 'disabled' : ''}">
-                                            <a class="page-link" th:href="@{/maintenance(page=${maintenance.number - 1})}">Previous</a>
+                                        <li class="page-item disabled"><a class="page-link" aria-label="Previous"
+                                                                          href="#"><span aria-hidden="true">«</span></a>
                                         </li>
-                                        <li class="page-item"
-                                            th:each="i : ${#numbers.sequence(0, maintenance.totalPages - 1)}"
-                                            th:classappend="${i == maintenance.number ? 'active' : ''}">
-                                            <a class="page-link" th:href="@{/maintenance(page=${i})}"
-                                               th:text="${i + 1}"></a>
+                                        <li class="page-item active"><a class="page-link" th:href="@{/payment}">1</a>
                                         </li>
-                                        <li class="page-item" th:classappend="${maintenance.last ? 'disabled' : ''}">
-                                            <a class="page-link" th:href="@{/maintenance(page=${maintenance.number + 1})}">Next</a>
-                                        </li>
+                                        <li class="page-item"><a class="page-link" aria-label="Next" href="#"><span
+                                                aria-hidden="true">»</span></a></li>
                                     </ul>
                                 </nav>
                             </div>

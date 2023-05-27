@@ -22,6 +22,8 @@ public class StaffService {
         return staffRepository.findAll();
     }
 
+
+
     public Staff authenticate(String email) {
         return staffRepository.findByEmail(email);
     }

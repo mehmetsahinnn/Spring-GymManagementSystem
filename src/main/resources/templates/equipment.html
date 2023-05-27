@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Members - GymManagement</title>
+    <title>Equipment - GymManagement</title>
     <link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}">
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
@@ -12,43 +12,43 @@
     <link rel="stylesheet" th:href="@{/css/untitled.css}">
 </head>
 
-
 <body id="page-top">
 <div id="wrapper">
     <nav class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0">
-        <div class="container-fluid d-flex flex-column p-0">
-            <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="#">
-                <div class="sidebar-brand-icon rotate-n-15"></div>
-                <div class="sidebar-brand-text mx-3"><span>GymManagement</span></div>
-            </a>
+        <div class="container-fluid d-flex flex-column p-0"><a
+                class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="#">
+            <div class="sidebar-brand-icon rotate-n-15"></div>
+            <div class="sidebar-brand-text mx-3"><span>GymManagement</span></div>
+        </a>
             <hr class="sidebar-divider my-0">
             <ul class="navbar-nav text-light" id="accordionSidebar">
                 <li class="nav-item"><a class="nav-link" th:href="@{/home}"><i
                         class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
                 <li class="nav-item"></li>
                 <li class="nav-item"></li>
-                <li class="nav-item"><a class="nav-link active" th:href="@{/table}"><i
+                <li class="nav-item"><a class="nav-link " th:href="@{/table}"><i
                         class="fas fa-table"></i><span>Members</span></a></li>
                 <li class="nav-item"></li>
                 <li class="nav-item"></li>
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/equipment}" data-bs-target="equipment.html"><i
+                    <a class="nav-link active" th:href="@{/equipment}" data-bs-target="equipment.html"><i
                             class="fas fa-table"></i><span>Equipment</span></a>
                     <a class="nav-link" th:href="@{/maintenance}">
                         <i class="fas fa-table"></i><span>Maintenance</span>
+                    </a>
+                    <a class="nav-link " th:href="@{/payment}">
+                        <i class="fas fa-table"></i><span>Payment</span>
                     </a>
                     <a class="nav-link" th:href="@{/staff}" data-bs-target="staff.html"><i
                             class="fas fa-table"></i><span>Staff</span></a><a class="nav-link" th:href="@{/profile}"><i
                         class="fas fa-user"></i><span>Profile</span></a>
                 </li>
-
             </ul>
             <div class="text-center d-none d-md-inline">
                 <button class="btn rounded-circle border-0" id="sidebarToggle" type="button"></button>
             </div>
         </div>
     </nav>
-
     <div class="d-flex flex-column" id="content-wrapper">
         <div id="content">
             <nav class="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top">
@@ -200,24 +200,23 @@
                 </div>
             </nav>
             <div class="container-fluid">
-                <h3 class="text-dark mb-4">Members</h3>
+                <h3 class="text-dark mb-4">Equipment</h3>
                 <div class="card shadow">
                     <div class="card-header py-3">
-                        <p class="text-primary m-0 fw-bold">Member Info</p>
+                        <p class="text-primary m-0 fw-bold">Equipment Info</p>
                     </div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-6 text-nowrap">
-                                <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable">
-                                    <label class="form-label">Show&nbsp;
-                                        <select class="d-inline-block form-select form-select-sm"
-                                                onchange="changeMemberSize(this.value)">
-                                            <option value="250" th:selected="${page.size == 250}">250</option>
-                                            <option value="500" th:selected="${page.size == 500}">500</option>
-                                            <option value="1000" th:selected="${page.size == 1000}">1000</option>
-                                        </select>&nbsp;
-                                    </label>
-                                </div>
+                                <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable"><label
+                                        class="form-label">Show&nbsp;
+                                    <select class="d-inline-block form-select form-select-sm"
+                                            onchange="changeEquipmentSize(this.value)">
+                                        <option value="50" th:selected="${equipment.size == 50}">50</option>
+                                        <option value="100" th:selected="${equipment.size == 100}">100</option>
+                                        <option value="250" th:selected="${equipment.size == 250}">250</option>
+                                    </select>&nbsp;
+                                    &nbsp;</label></div>
                             </div>
                             <div class="col-md-6">
                                 <div class="text-md-end dataTables_filter" id="dataTable_filter"><label
@@ -228,31 +227,23 @@
                         </div>
                         <div class="table-responsive table mt-2" id="dataTable" role="grid"
                              aria-describedby="dataTable_info">
-                            <table class="table my-0">
+                            <table class="table my-0" id="dataTable">
                                 <thead>
                                 <tr>
                                     <th>Id</th>
-                                    <th>Name</th>
-                                    <th>Email Address</th>
-                                    <th>Sex</th>
-                                    <th>Address</th>
-                                    <th>Charge</th>
-                                    <th>Personal Trainer ID</th>
-                                    <th>Start Date</th>
-                                    <th>End Date</th>
+                                    <th>Type</th>
+                                    <th>Manufacturer</th>
+                                    <th>Model</th>
+                                    <th>Purchase Date</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr th:each="member : ${page.content}">
-                                    <td th:text="${member.id}"></td>
-                                    <td th:text="${member.name}"></td>
-                                    <td th:text="${member.emailAddress}"></td>
-                                    <td th:text="${member.sex}"></td>
-                                    <td th:text="${member.address}"></td>
-                                    <td th:text="${member.charge}"></td>
-                                    <td th:text="${member.ptId}"></td>
-                                    <td th:text="${#dates.format(member.startDate, 'yyyy-MM-dd')}"></td>
-                                    <td th:text="${#dates.format(member.endDate, 'yyyy-MM-dd')}"></td>
+                                <tr th:each="equipment : ${equipment.content}">
+                                    <td th:text="${equipment.id}"></td>
+                                    <td th:text="${equipment.type}"></td>
+                                    <td th:text="${equipment.manufacturer}"></td>
+                                    <td th:text="${equipment.model}"></td>
+                                    <td th:text="${#dates.format(equipment.purchaseDate, 'yyyy-MM-dd')}"></td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -260,31 +251,31 @@
                         <div class="row">
                             <div class="col-md-6 align-self-center">
                                 <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">
-                                    Showing <span th:text="${page.number * page.size + 1}"></span>
+                                    Showing <span th:text="${equipment.number * equipment.size + 1}"></span>
                                     to <span
-                                        th:text="${(page.number + 1) * page.size > page.totalElements ? page.totalElements : (page.number + 1) * page.size}"></span>
-                                    of <span th:text="${page.totalElements}"></span>
+                                        th:text="${(equipment.number + 1) * equipment.size > equipment.totalElements ? equipment.totalElements : (equipment.number + 1) * equipment.size}"></span>
+                                    of <span th:text="${equipment.totalElements}"></span>
                                 </p>
                             </div>
                             <div class="col-md-6">
                                 <nav class="d-lg-flex justify-content-lg-end dataTables_paginate paging_simple_numbers">
                                     <ul class="pagination">
-                                        <li class="page-item" th:classappend="${page.first ? 'disabled' : ''}">
-                                            <a class="page-link"
-                                               th:href="@{/table(page=${page.number - 1})}">Previous</a>
+                                        <li class="page-item" th:classappend="${equipment.first ? 'disabled' : ''}">
+                                            <a class="page-link" th:href="@{/equipment(page=${equipment.number - 1})}">Previous</a>
                                         </li>
-                                        <li class="page-item" th:each="i : ${#numbers.sequence(0, page.totalPages - 1)}"
-                                            th:classappend="${i == page.number ? 'active' : ''}">
-                                            <a class="page-link" th:href="@{/table(page=${i})}" th:text="${i + 1}"></a>
+                                        <li class="page-item"
+                                            th:each="i : ${#numbers.sequence(0, equipment.totalPages - 1)}"
+                                            th:classappend="${i == equipment.number ? 'active' : ''}">
+                                            <a class="page-link" th:href="@{/equipment(page=${i})}"
+                                               th:text="${i + 1}"></a>
                                         </li>
-                                        <li class="page-item" th:classappend="${page.last ? 'disabled' : ''}">
-                                            <a class="page-link" th:href="@{/table(page=${page.number + 1})}">Next</a>
+                                        <li class="page-item" th:classappend="${equipment.last ? 'disabled' : ''}">
+                                            <a class="page-link" th:href="@{/equipment(page=${equipment.number + 1})}">Next</a>
                                         </li>
                                     </ul>
                                 </nav>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>

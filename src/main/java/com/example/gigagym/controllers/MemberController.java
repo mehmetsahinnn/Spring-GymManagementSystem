@@ -36,7 +36,7 @@ public class MemberController {
             return "redirect:/maintenance";
         }
         else {
-            return "table";
+            return "member";
         }
     }
 }
