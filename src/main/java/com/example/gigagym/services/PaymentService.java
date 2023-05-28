@@ -35,4 +35,8 @@ public class PaymentService {
         return paymentRepository.findAll();
     }
 
+    public void setPaymentStatusToOne(Integer paymentId) {
+        paymentRepository.setPaymentStatusToOne(paymentId);
+    }
+
 }

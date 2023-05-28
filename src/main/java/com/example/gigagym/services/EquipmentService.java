@@ -2,6 +2,7 @@ package com.example.gigagym.services;
 
 import com.example.gigagym.models.Equipment;
 import com.example.gigagym.models.Maintenance;
+import com.example.gigagym.models.Staff;
 import com.example.gigagym.repositories.EquipmentRepository;
 import com.example.gigagym.repositories.MaintenanceRepository;
 import org.springframework.stereotype.Service;
@@ -40,6 +41,10 @@ public class EquipmentService {
         nextWeekDate.add(Calendar.DATE, 7);
         List<Maintenance> maintenanceList = maintenanceRepository.findByDateOfNextMaintenanceBetween(currentDate.getTime(), nextWeekDate.getTime());
         return maintenanceList.size();
+    }
+
+    public void deleteStaff(Long id) {
+        equipmentRepository.deleteById(id);
     }
 
 

@@ -20,9 +20,9 @@
             /*--line_color : #1b1919 ;*/
             /*--back_color : #E9ECFF  ;*/
 
-             /*color type C */
-             -line_color : #00135C ;
-            --back_color : #DEFFFA  ;
+            /*color type C */
+            -line_color: #00135C;
+            --back_color: #DEFFFA;
         }
 
         .button {
@@ -490,7 +490,7 @@
                 </div>
             </nav>
             <div class="container-fluid">
-                <h3 class="text-dark mb-4">Equipment</h3>
+                <h3 class="text-dark mb-4">Payment</h3>
                 <div class="card shadow">
                     <div class="card-header py-3">
                         <p class="text-primary m-0 fw-bold">Equipment Info</p>
@@ -517,6 +517,14 @@
                         </div>
                         <div class="table-responsive table mt-2" id="dataTable" role="grid"
                              aria-describedby="dataTable_info">
+                            <form id="insert-form" style="display: none" action="/payment" method="post">
+                                <input type="number" name="SID" placeholder="SID" required>
+                                <input type="number" name="salary" placeholder="salary" required>
+                                <input type="number" name="paymentStatus" placeholder="paymentStatus" required>
+                                <input type="date" name="paymentDate" required>
+                                <button type="submit">Submit</button>
+                            </form>
+                            <button class="btn btn-success" id="insert-button" th:onclick="showInsertForm()">Insert</button>
                             <table class="table my-0" id="dataTable">
                                 <thead>
                                 <tr>
@@ -536,7 +544,7 @@
                                     <td th:if="${payment.paymentStatus == 0}">
                                         <span th:text="${payment.paymentStatus}"></span>
                                         <div class="container">
-                                            <a href="#" class="button">
+                                            <a href="#" class="button" th:attr="data-id=${payment.id}">
                                                 <div class="button__line"></div>
                                                 <div class="button__line"></div>
                                                 <span class="button__text">Pay Salary</span>
@@ -589,6 +597,8 @@
 <script th:src="@{/js/bs-init.js}"></script>
 <script th:src="@{/js/theme.js}"></script>
 <script th:src="@{/js/dump.js}"></script>
+<script th:src="@{/js/payment.js}"></script>
+<script th:src="@{/js/staff.js}"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
     $(document).ready(function () {
@@ -600,5 +610,4 @@
     });
 </script>
 </body>
-
 </html>

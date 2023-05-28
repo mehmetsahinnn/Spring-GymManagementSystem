@@ -183,7 +183,8 @@
                             <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link"
                                                                        aria-expanded="false" data-bs-toggle="dropdown"
                                                                        href="#"><span
-                                    class="d-none d-lg-inline me-2 text-gray-600 small" th:text="${StaffName}"></span><img
+                                    class="d-none d-lg-inline me-2 text-gray-600 small"
+                                    th:text="${StaffName}"></span><img
                                     class="border rounded-circle img-profile"
                                     th:src="@{/img/avatars/avatar1.jpeg}"></a>
                                 <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in"><a
@@ -229,6 +230,15 @@
                         </div>
                         <div class="table-responsive table mt-2" id="dataTable" role="grid"
                              aria-describedby="dataTable_info">
+                            <form id="insert-form" style="display: none" action="/staff" method="post">
+                                <input type="text" name="name" placeholder="Name" required>
+                                <input type="email" name="emailAddress" placeholder="Email" required>
+                                <input type="text" name="jobTitle" placeholder="Job Title" required>
+                                <input type="text" name="daysOfWork" placeholder="Days of Work" required>
+                                <input type="date" name="startDate" required>
+                                <button type="submit">Submit</button>
+                            </form>
+                            <button class="btn btn-success" id="insert-button" th:onclick="showInsertForm()">Insert</button>
                             <table class="table my-0" id="dataTable">
                                 <thead>
                                 <tr>
@@ -287,6 +297,7 @@
 <script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
 <script th:src="@{/js/bs-init.js}"></script>
 <script th:src="@{/js/theme.js}"></script>
+<script th:src="@{/js/staff.js}"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
     $(document).ready(function () {
@@ -298,5 +309,4 @@
     });
 </script>
 </body>
-
 </html>

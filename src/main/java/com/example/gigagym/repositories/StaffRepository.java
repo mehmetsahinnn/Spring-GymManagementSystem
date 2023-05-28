@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 public interface StaffRepository extends JpaRepository<Staff, Integer> {
 
 
-
     @Query("SELECT s FROM Staff s WHERE s.emailAddress = ?1")
     Staff findByEmail(String email);
 }

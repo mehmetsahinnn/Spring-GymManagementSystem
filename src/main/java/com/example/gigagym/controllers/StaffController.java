@@ -2,32 +2,28 @@ package com.example.gigagym.controllers;
 
 import com.example.gigagym.models.Payment;
 import com.example.gigagym.models.Staff;
-import com.example.gigagym.repositories.PaymentRepository;
-import com.example.gigagym.services.PaymentService;
+import com.example.gigagym.repositories.StaffRepository;
 import com.example.gigagym.services.StaffService;
 import jakarta.servlet.http.HttpSession;
-import org.springframework.data.web.PageableDefault;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.data.domain.Pageable;
+import org.springframework.web.bind.annotation.*;
 
 
-import java.util.Collections;
+import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 public class StaffController {
 
     private final StaffService staffService;
-    private final PaymentService paymentService;
-    private final PaymentRepository paymentRepository;
+    private final StaffRepository staffRepository;
 
-    public StaffController(StaffService staffService, PaymentService paymentService, PaymentRepository paymentRepository) {
+    public StaffController(StaffService staffService, StaffRepository staffRepository) {
         this.staffService = staffService;
-        this.paymentService = paymentService;
-        this.paymentRepository = paymentRepository;
+        this.staffRepository = staffRepository;
     }
 
     @GetMapping("/staff")
@@ -49,22 +45,27 @@ public class StaffController {
         }
     }
 
-    @GetMapping("/payment")
-    public String payment(Model model, @PageableDefault(size = 20) Pageable pageable, HttpSession session) {
-        String StaffName = (String) session.getAttribute("StaffName");
-        String JobTitle = (String) session.getAttribute("JobTitle");
-        model.addAttribute("StaffName", StaffName);
 
-        List<Payment> payment = paymentService.listPayment();
-        model.addAttribute("payment", payment);
-
-        if ("Personal Trainer".equals(JobTitle)) {
-            return "redirect:/home";
-        }
-        if ("Maintenance Guy".equals(JobTitle)) {
-            return "redirect:/home";
-        } else {
-            return "payment";
-        }
+    @PostMapping("/staff")
+    public String saveData(@RequestParam("name") String name,
+                           @RequestParam("emailAddress") String emailAddress,
+                           @RequestParam("jobTitle") String jobTitle,
+                           @RequestParam("daysOfWork") int daysOfWork,
+                           @RequestParam("startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate) {
+        Staff staff = new Staff();
+        staff.setName(name);
+        staff.setEmailAddress(emailAddress);
+        staff.setJobTitle(jobTitle);
+        staff.setDaysOfWork(daysOfWork);
+        staff.setStartDate(startDate);
+        staffRepository.save(staff);
+        return "redirect:/home";
     }
+
+    @DeleteMapping("/staff/{id}")
+    public ResponseEntity<Void> deleteStaff(@PathVariable Integer id) {
+        staffService.deleteStaff(id);
+        return ResponseEntity.noContent().build();
+    }
+
 }

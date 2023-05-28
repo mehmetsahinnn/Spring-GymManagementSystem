@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -17,4 +19,9 @@ public interface PaymentRepository extends JpaRepository<Payment, Long> {
 
     @Query("SELECT p.SID, SUM(p.salary) FROM Payment p GROUP BY p.SID")
     List<Object[]> calculateTotalPaymentsBySID();
+
+    @Transactional
+    @Modifying
+    @Query("UPDATE Payment p SET p.paymentStatus = 1 WHERE p.id = :paymentId")
+    void setPaymentStatusToOne(Integer paymentId);
 }

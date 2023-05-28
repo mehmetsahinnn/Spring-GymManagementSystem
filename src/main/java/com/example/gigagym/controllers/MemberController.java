@@ -6,9 +6,14 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.Date;
 
 
 @Controller
@@ -38,6 +43,29 @@ public class MemberController {
         else {
             return "member";
         }
+    }
+
+    @PostMapping("/table")
+    public String addMember(
+            @RequestParam("name") String name,
+                        @RequestParam("emailAddress") String emailAddress,
+                        @RequestParam("sex") String sex,
+                        @RequestParam("address") String address,
+                        @RequestParam("charge") double charge,
+                        @RequestParam("ptId") int ptID,
+                        @RequestParam("startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
+                        @RequestParam("endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate){
+        Member member = new Member();
+        member.setName(name);
+        member.setEmailAddress(emailAddress);
+        member.setSex(sex);
+        member.setAddress(address);
+        member.setCharge(charge);
+        member.setPtId(ptID);
+        member.setStartDate(startDate);
+        member.setEndDate(endDate);
+        memberRepository.save(member);
+        return "redirect:/home";
     }
 }
 

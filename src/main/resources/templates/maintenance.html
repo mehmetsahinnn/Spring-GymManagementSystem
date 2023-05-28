@@ -180,7 +180,8 @@
                             <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link"
                                                                        aria-expanded="false" data-bs-toggle="dropdown"
                                                                        href="#"><span
-                                    class="d-none d-lg-inline me-2 text-gray-600 small" th:text="${StaffName}"></span><img
+                                    class="d-none d-lg-inline me-2 text-gray-600 small"
+                                    th:text="${StaffName}"></span><img
                                     class="border rounded-circle img-profile"
                                     th:src="@{/img/avatars/avatar1.jpeg}"></a>
                                 <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in"><a
@@ -200,7 +201,7 @@
                 </div>
             </nav>
             <div class="container-fluid">
-                <h3 class="text-dark mb-4">Equipment</h3>
+                <h3 class="text-dark mb-4">Maintenance</h3>
                 <div class="card shadow">
                     <div class="card-header py-3">
                         <p class="text-primary m-0 fw-bold">Equipment Info</p>
@@ -227,6 +228,14 @@
                         </div>
                         <div class="table-responsive table mt-2" id="dataTable" role="grid"
                              aria-describedby="dataTable_info">
+                            <form id="insert-form" style="display: none" action="/maintenance" method="post">
+                                <input type="number" name="equipmentId" placeholder="EQID" required>
+                                <input type="number" name="maintenanceId" placeholder="MID" required>
+                                <input type="date" name="dateOfMaintenance" required>
+                                <input type="date" name="dateOfNextMaintenance" required>
+                                <button type="submit">Submit</button>
+                            </form>
+                            <button class="btn btn-success" id="insert-button" th:onclick="showInsertForm()">Insert</button>
                             <table class="table my-0" id="dataTable">
                                 <thead>
                                 <tr>
@@ -261,7 +270,8 @@
                                 <nav class="d-lg-flex justify-content-lg-end dataTables_paginate paging_simple_numbers">
                                     <ul class="pagination">
                                         <li class="page-item" th:classappend="${maintenance.first ? 'disabled' : ''}">
-                                            <a class="page-link" th:href="@{/maintenance(page=${maintenance.number - 1})}">Previous</a>
+                                            <a class="page-link"
+                                               th:href="@{/maintenance(page=${maintenance.number - 1})}">Previous</a>
                                         </li>
                                         <li class="page-item"
                                             th:each="i : ${#numbers.sequence(0, maintenance.totalPages - 1)}"
@@ -270,7 +280,8 @@
                                                th:text="${i + 1}"></a>
                                         </li>
                                         <li class="page-item" th:classappend="${maintenance.last ? 'disabled' : ''}">
-                                            <a class="page-link" th:href="@{/maintenance(page=${maintenance.number + 1})}">Next</a>
+                                            <a class="page-link"
+                                               th:href="@{/maintenance(page=${maintenance.number + 1})}">Next</a>
                                         </li>
                                     </ul>
                                 </nav>
@@ -292,6 +303,7 @@
 <script th:src="@{/js/bs-init.js}"></script>
 <script th:src="@{/js/theme.js}"></script>
 <script th:src="@{/js/dump.js}"></script>
+<script th:src="@{/js/staff.js}"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
     $(document).ready(function () {

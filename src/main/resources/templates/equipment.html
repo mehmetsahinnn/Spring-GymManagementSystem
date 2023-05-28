@@ -180,7 +180,8 @@
                             <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link"
                                                                        aria-expanded="false" data-bs-toggle="dropdown"
                                                                        href="#"><span
-                                    class="d-none d-lg-inline me-2 text-gray-600 small" th:text="${StaffName}"></span><img
+                                    class="d-none d-lg-inline me-2 text-gray-600 small"
+                                    th:text="${StaffName}"></span><img
                                     class="border rounded-circle img-profile"
                                     th:src="@{/img/avatars/avatar1.jpeg}"></a>
                                 <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in"><a
@@ -227,6 +228,14 @@
                         </div>
                         <div class="table-responsive table mt-2" id="dataTable" role="grid"
                              aria-describedby="dataTable_info">
+                            <form id="insert-form" style="display: none" action="/equipment" method="post">
+                                <input type="text" name="type" placeholder="Type" required>
+                                <input type="text" name="manufacturer" placeholder="Manufacturer" required>
+                                <input type="text" name="model" placeholder="Model" required>
+                                <input type="date" name="purchaseDate" required>
+                                <button type="submit">Submit</button>
+                            </form>
+                            <button class="btn btn-success" id="insert-button" th:onclick="showInsertForm()">Insert</button>
                             <table class="table my-0" id="dataTable">
                                 <thead>
                                 <tr>
@@ -292,6 +301,7 @@
 <script th:src="@{/js/bs-init.js}"></script>
 <script th:src="@{/js/theme.js}"></script>
 <script th:src="@{/js/dump.js}"></script>
+<script th:src="@{/js/staff.js}"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
     $(document).ready(function () {

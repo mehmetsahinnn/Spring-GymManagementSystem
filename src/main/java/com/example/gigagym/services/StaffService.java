@@ -22,9 +22,15 @@ public class StaffService {
         return staffRepository.findAll();
     }
 
-
-
     public Staff authenticate(String email) {
         return staffRepository.findByEmail(email);
+    }
+
+    public Staff saveStaff(Staff staff) {
+        return staffRepository.save(staff);
+    }
+
+    public void deleteStaff(Integer id) {
+        staffRepository.deleteById(id);
     }
 }
