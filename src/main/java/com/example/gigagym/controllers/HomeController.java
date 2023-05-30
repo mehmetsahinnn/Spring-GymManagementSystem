@@ -11,24 +11,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class HomeController {
     private final MemberService memberService;
     private final PaymentService paymentService;
-    private final MaintenanceService maintenanceService;
     private final EquipmentService equipmentService;
-    private final StaffService staffService;
 
 
     public HomeController(MemberService memberService, PaymentService paymentService, MaintenanceService maintenanceService, EquipmentService equipmentService, StaffService staffService) {
         this.memberService = memberService;
         this.paymentService = paymentService;
-        this.maintenanceService = maintenanceService;
         this.equipmentService = equipmentService;
-        this.staffService = staffService;
     }
 
     @RequestMapping("/home")
     public String index(Model model, HttpSession session) {
         String StaffName = (String) session.getAttribute("StaffName");
         String JobTitle = (String) session.getAttribute("JobTitle");
-
 
         model.addAttribute("numberOfUsersLastMonth", memberService.getNumberOfUsersRegisteredLastMonth());
         model.addAttribute("lastMonthEarnings", memberService.calculateLastMonthEarnings());

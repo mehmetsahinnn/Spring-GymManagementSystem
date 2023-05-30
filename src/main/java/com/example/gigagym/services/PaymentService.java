@@ -4,10 +4,8 @@ import com.example.gigagym.models.Payment;
 import com.example.gigagym.repositories.PaymentRepository;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+
 
 @Service
 public class PaymentService {
@@ -27,16 +25,18 @@ public class PaymentService {
             double sumOfSalaries = (Double) result[1];
             totalPayment += sumOfSalaries;
         }
-
         return totalPayment / 5;
     }
 
-    public List<Payment> listPayment(){
+    public List<Payment> listPayment() {
         return paymentRepository.findAll();
     }
 
-    public void setPaymentStatusToOne(Integer paymentId) {
-        paymentRepository.setPaymentStatusToOne(paymentId);
+    public void updatePaymentStatus(Long paymentId, int newStatus) {
+        Payment payment = paymentRepository.findById(paymentId).orElse(null);
+        if (payment != null) {
+            payment.setPaymentStatus(newStatus);
+            paymentRepository.save(payment);
+        }
     }
-
 }

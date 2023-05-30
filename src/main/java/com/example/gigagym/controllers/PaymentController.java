@@ -7,11 +7,11 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -20,6 +20,7 @@ public class PaymentController {
 
     private final PaymentService paymentService;
     private final PaymentRepository paymentRepository;
+
     public PaymentController(PaymentService paymentService, PaymentRepository paymentRepository) {
         this.paymentService = paymentService;
         this.paymentRepository = paymentRepository;
@@ -30,6 +31,10 @@ public class PaymentController {
         String StaffName = (String) session.getAttribute("StaffName");
         String JobTitle = (String) session.getAttribute("JobTitle");
         model.addAttribute("StaffName", StaffName);
+
+        double totalPaymentDividedByFive = paymentService.calculateTotalPaymentDividedByFive();
+        session.setAttribute("totalPaymentDividedByFive", totalPaymentDividedByFive);
+        model.addAttribute("totalPaymentDividedByFive", totalPaymentDividedByFive);
 
         List<Payment> payment = paymentService.listPayment();
         model.addAttribute("payment", payment);
@@ -55,7 +60,21 @@ public class PaymentController {
         payment.setPaymentStatus(paymentStatus);
         payment.setPaymentDate(paymentDate);
         paymentRepository.save(payment);
-        return "redirect:/home";
+        return "redirect:/payment";
     }
 
+    @PostMapping("/payment/update")
+    public String updatePaymentStatus(@RequestParam("paymentId") Long paymentId, HttpSession session) {
+        double totalPaymentDividedByFive = paymentService.calculateTotalPaymentDividedByFive();
+        session.setAttribute("totalPaymentDividedByFive", totalPaymentDividedByFive);
+
+        paymentService.updatePaymentStatus(paymentId, 1);
+        return "redirect:/payment";
+    }
+
+    @DeleteMapping("/deletePayment/{id}")
+    public ResponseEntity<?> deletePayment(@PathVariable Integer id){
+        paymentRepository.deletePayment(id);
+        return ResponseEntity.ok().build();
+    }
 }

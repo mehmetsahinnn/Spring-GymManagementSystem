@@ -6,6 +6,7 @@ import com.example.gigagym.repositories.StaffRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -26,11 +27,7 @@ public class StaffService {
         return staffRepository.findByEmail(email);
     }
 
-    public Staff saveStaff(Staff staff) {
-        return staffRepository.save(staff);
-    }
-
-    public void deleteStaff(Integer id) {
-        staffRepository.deleteById(id);
+    public void updateStaff(Integer id, String name, String emailAddress, String jobTitle, Integer daysOfWork, Date startDate) {
+        staffRepository.updateStaff(id, name, emailAddress, jobTitle, daysOfWork, startDate);
     }
 }

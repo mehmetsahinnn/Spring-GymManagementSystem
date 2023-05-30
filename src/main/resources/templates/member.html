@@ -242,8 +242,29 @@
                                 <input type="date" name="startDate" required>
                                 <input type="date" name="endDate" required>
                                 <button type="submit">Submit</button>
+                                <button type="button" id="close-insert-button">Close</button>
                             </form>
-                            <button class="btn btn-success" id="insert-button" th:onclick="showInsertForm()">Insert</button>
+                            <button class="btn btn-success" id="insert-button" th:onclick="showInsertMember()">
+                                Insert
+                            </button>
+
+                            <form id="update-form" style="display: none" action="/updateMember" method="post">
+                                <input type="text" name="id" placeholder="ID" required>
+                                <input type="text" name="name" placeholder="Name" required>
+                                <input type="email" name="emailAddress" placeholder="Email" required>
+                                <input type="text" name="sex" placeholder="sex" required>
+                                <input type="text" name="address" placeholder="address" required>
+                                <input type="number" name="charge" placeholder="charge" required>
+                                <input type="number" name="ptId" placeholder="ptId" required>
+                                <input type="date" name="startDate" required>
+                                <input type="date" name="endDate" required>
+                                <button type="submit">Update</button>
+                                <button type="button" id="close-update-button">Close</button>
+                            </form>
+                            <button class="btn btn-info" role="button" id="update-button" th:onclick="showUpdateForm()">
+                                Update
+                            </button>
+
                             <table class="table my-0" id="dataTable">
                                 <thead>
                                 <tr>
@@ -267,8 +288,25 @@
                                     <td th:text="${member.address}"></td>
                                     <td th:text="${member.charge}"></td>
                                     <td th:text="${member.ptId}"></td>
-                                    <td th:text="${#dates.format(member.startDate, 'yyyy-MM-dd')}"></td>
-                                    <td th:text="${#dates.format(member.endDate, 'yyyy-MM-dd')}"></td>
+                                    <td th:text="${#dates.format(member.startDate, 'dd-MM-yyyy')}"></td>
+                                    <td th:text="${#dates.format(member.endDate, 'dd-MM-yyyy')}"></td>
+                                    <td>
+                                        <button class="delete-button btn btn-warning"
+                                                th:data-id="${member.id}"
+                                                onclick="
+                                                    var id = this.getAttribute('data-id');
+                                                    fetch('/deleteMember/' + id, {
+                                                            method: 'DELETE',
+                                                        }).then(function(response) {
+                                                            if (response.ok) {
+                                                                location.reload();
+                                                            } else {
+                                                                alert('Failed to delete staff record');
+                                                            }
+                                                        });
+                                                ">Delete
+                                        </button>
+                                    </td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -317,7 +355,7 @@
 <script th:src="@{/js/bs-init.js}"></script>
 <script th:src="@{/js/theme.js}"></script>
 <script th:src="@{/js/dump.js}"></script>
-<script th:src="@{/js/staff.js}"></script>
+<script th:src="@{/js/member.js}"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
     $(document).ready(function () {

@@ -2,7 +2,6 @@ package com.example.gigagym.controllers;
 
 import com.example.gigagym.models.Equipment;
 import com.example.gigagym.models.Maintenance;
-import com.example.gigagym.models.Payment;
 import com.example.gigagym.repositories.EquipmentRepository;
 import com.example.gigagym.repositories.MaintenanceRepository;
 import com.example.gigagym.services.EquipmentService;
@@ -52,12 +51,6 @@ public class EquipmentController {
         }
     }
 
-    @DeleteMapping("/equipment/{id}")
-    public ResponseEntity<Void> deleteStaff(@PathVariable Long id) {
-        equipmentService.deleteStaff(id);
-        return ResponseEntity.noContent().build();
-    }
-
     @PostMapping("/equipment")
     public String saveEquipment(@RequestParam("type") String type,
                                 @RequestParam("manufacturer") String manufacturer,
@@ -70,6 +63,12 @@ public class EquipmentController {
         equipment.setPurchaseDate(purchaseDate);
         equipmentRepository.save(equipment);
         return "redirect:/home";
+    }
+
+    @DeleteMapping("/deleteEquipment/{id}")
+    public ResponseEntity<?> deleteStaff(@PathVariable Long id) {
+        equipmentService.deleteStaff(id);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/maintenance")
@@ -100,5 +99,11 @@ public class EquipmentController {
         maintenance.setDateOfNextMaintenance(dateOfNextMaintenance);
         maintenanceRepository.save(maintenance);
         return "redirect:/home";
+    }
+
+    @DeleteMapping("/deleteMaintenance/{id}")
+    public ResponseEntity<?> deleteMaintenance(@PathVariable Integer id){
+        maintenanceRepository.deleteMaintenance(id);
+        return ResponseEntity.ok().build();
     }
 }

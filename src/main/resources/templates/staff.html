@@ -10,6 +10,7 @@
           href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
     <link rel="stylesheet" th:href="@{/fonts/fontawesome-all.min.css}">
     <link rel="stylesheet" th:href="@{/css/untitled.css}">
+    <link rel="stylesheet" th:href="@{/css/staff.css}">
 </head>
 
 
@@ -212,24 +213,29 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-6 text-nowrap">
-                                <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable"><label
-                                        class="form-label">Show&nbsp;<select
-                                        class="d-inline-block form-select form-select-sm">
-                                    <option value="10" selected="">10</option>
-                                    <option value="25">25</option>
-                                    <option value="50">50</option>
-                                    <option value="100">100</option>
-                                </select>&nbsp;</label></div>
+                                <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable">
+                                    <label class="form-label">Show&nbsp;
+                                        <select class="d-inline-block form-select form-select-sm">
+                                            <option value="10" selected="">10</option>
+                                            <option value="25">25</option>
+                                            <option value="50">50</option>
+                                            <option value="100">100</option>
+                                        </select>&nbsp;
+                                    </label>
+                                </div>
                             </div>
                             <div class="col-md-6">
-                                <div class="text-md-end dataTables_filter" id="dataTable_filter"><label
-                                        class="form-label"><input type="search" class="form-control form-control-sm"
-                                                                  aria-controls="dataTable"
-                                                                  placeholder="Search"></label></div>
+                                <div class="text-md-end dataTables_filter" id="dataTable_filter">
+                                    <label class="form-label">
+                                        <input type="search" class="form-control form-control-sm"
+                                               aria-controls="dataTable" placeholder="Search">
+                                    </label>
+                                </div>
                             </div>
                         </div>
                         <div class="table-responsive table mt-2" id="dataTable" role="grid"
                              aria-describedby="dataTable_info">
+
                             <form id="insert-form" style="display: none" action="/staff" method="post">
                                 <input type="text" name="name" placeholder="Name" required>
                                 <input type="email" name="emailAddress" placeholder="Email" required>
@@ -237,8 +243,24 @@
                                 <input type="text" name="daysOfWork" placeholder="Days of Work" required>
                                 <input type="date" name="startDate" required>
                                 <button type="submit">Submit</button>
+                                <button type="button" id="close-insert-button">Close</button>
                             </form>
-                            <button class="btn btn-success" id="insert-button" th:onclick="showInsertForm()">Insert</button>
+                            <button class="btn btn-success" role="button" id="insert-button" onclick="showInsertForm()">
+                                Insert
+                            </button>
+                            <form id="update-form" style="display: none" action="/updateStaff" method="post">
+                                <input type="text" name="id" placeholder="ID" required>
+                                <input type="text" name="name" placeholder="Name">
+                                <input type="email" name="emailAddress" placeholder="Email">
+                                <input type="text" name="jobTitle" placeholder="Job Title">
+                                <input type="text" name="daysOfWork" placeholder="Days of Work">
+                                <input type="date" name="startDate">
+                                <button type="submit">Update</button>
+                                <button type="button" id="close-update-button">Close</button>
+                            </form>
+                            <button class="btn btn-info" role="button" id="update-button" onclick="showUpdateMember()">
+                                Update
+                            </button>
                             <table class="table my-0" id="dataTable">
                                 <thead>
                                 <tr>
@@ -248,18 +270,34 @@
                                     <th>Job Title</th>
                                     <th>Days of Work</th>
                                     <th>Start Date</th>
+                                    <th>Actions</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <!--                                <img class="rounded-circle me-2" width="30" height="30"-->
-                                <!--                                             th:src="@{/img/avatars/avatar1.jpeg}">-->
                                 <tr th:each="staff : ${listStaff}">
                                     <td th:text="${staff.id}"></td>
                                     <td th:text="${staff.name}"></td>
                                     <td th:text="${staff.emailAddress}"></td>
                                     <td th:text="${staff.jobTitle}"></td>
                                     <td th:text="${staff.daysOfWork}"></td>
-                                    <td th:text="${#dates.format(staff.startDate, 'yyyy-MM-dd')}"></td>
+                                    <td th:text="${#dates.format(staff.startDate, 'dd-MM-yyyy')}"></td>
+                                    <td>
+                                        <button class="delete-button btn btn-warning"
+                                                th:data-id="${staff.id}"
+                                                onclick="
+                                                    var id = this.getAttribute('data-id');
+                                                    fetch('/deleteStaff/' + id, {
+                                                            method: 'DELETE',
+                                                        }).then(function(response) {
+                                                            if (response.ok) {
+                                                                location.reload();
+                                                            } else {
+                                                                alert('Failed to delete staff record');
+                                                            }
+                                                        });
+                                                ">Delete
+                                        </button>
+                                    </td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -272,12 +310,19 @@
                             <div class="col-md-6">
                                 <nav class="d-lg-flex justify-content-lg-end dataTables_paginate paging_simple_numbers">
                                     <ul class="pagination">
-                                        <li class="page-item disabled"><a class="page-link" aria-label="Previous"
-                                                                          href="#"><span aria-hidden="true">«</span></a>
+                                        <li class="page-item disabled">
+                                            <a class="page-link" aria-label="Previous" href="#">
+                                                <span aria-hidden="true">«</span>
+                                            </a>
                                         </li>
-                                        <li class="page-item active"><a class="page-link" th:href="@{/staff}">1</a></li>
-                                        <li class="page-item"><a class="page-link" aria-label="Next" href="#"><span
-                                                aria-hidden="true">»</span></a></li>
+                                        <li class="page-item active">
+                                            <a class="page-link" th:href="@{/staff}">1</a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a class="page-link" aria-label="Next" href="#">
+                                                <span aria-hidden="true">»</span>
+                                            </a>
+                                        </li>
                                     </ul>
                                 </nav>
                             </div>

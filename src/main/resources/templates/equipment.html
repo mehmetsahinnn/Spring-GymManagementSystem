@@ -252,7 +252,24 @@
                                     <td th:text="${equipment.type}"></td>
                                     <td th:text="${equipment.manufacturer}"></td>
                                     <td th:text="${equipment.model}"></td>
-                                    <td th:text="${#dates.format(equipment.purchaseDate, 'yyyy-MM-dd')}"></td>
+                                    <td th:text="${#dates.format(equipment.purchaseDate, 'dd-MM-yyyy')}"></td>
+                                    <td>
+                                        <button class="delete-button btn btn-warning"
+                                                th:data-id="${equipment.id}"
+                                                onclick="
+                                                    var id = this.getAttribute('data-id');
+                                                    fetch('/deleteEquipment/' + id, {
+                                                            method: 'DELETE',
+                                                        }).then(function(response) {
+                                                            if (response.ok) {
+                                                                location.reload();
+                                                            } else {
+                                                                alert('Failed to delete staff record');
+                                                            }
+                                                        });
+                                                ">Delete
+                                        </button>
+                                    </td>
                                 </tr>
                                 </tbody>
                             </table>

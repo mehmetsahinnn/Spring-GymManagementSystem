@@ -524,7 +524,8 @@
                                 <input type="date" name="paymentDate" required>
                                 <button type="submit">Submit</button>
                             </form>
-                            <button class="btn btn-success" id="insert-button" th:onclick="showInsertForm()">Insert</button>
+                            <button class="btn btn-success" id="insert-button" th:onclick="showInsertForm()">Insert
+                            </button>
                             <table class="table my-0" id="dataTable">
                                 <thead>
                                 <tr>
@@ -544,13 +545,18 @@
                                     <td th:if="${payment.paymentStatus == 0}">
                                         <span th:text="${payment.paymentStatus}"></span>
                                         <div class="container">
-                                            <a href="#" class="button" th:attr="data-id=${payment.id}">
-                                                <div class="button__line"></div>
-                                                <div class="button__line"></div>
-                                                <span class="button__text">Pay Salary</span>
-                                                <div class="button__drow1"></div>
-                                                <div class="button__drow2"></div>
-                                            </a>
+                                            <form th:action="@{/payment/update}" method="post">
+                                                <input type="hidden" name="paymentId" th:value="${payment.id}">
+                                                <input type="hidden" name="totalPaymentDividedByFive"
+                                                       th:value="${totalPaymentDividedByFive}">
+                                                <button type="submit" class="button"
+                                                        style="border: none; background:none;">
+                                                    <div class="button__line"></div>
+                                                    <div class="button__line"></div>
+                                                    <span class="button__text">Pay Salary</span>
+                                                    <div class="button__drow1"></div>
+                                                    <div class="button__drow2"></div>
+                                                </button>
                                         </div>
                                     </td>
                                     <td th:unless="${payment.paymentStatus == 0}">
@@ -558,6 +564,25 @@
                                     </td>
 
                                     <td th:text="${#dates.format(payment.paymentDate, 'yyyy-MM-dd')}"></td>
+
+                                    <td>
+                                        <button class="delete-button btn btn-warning"
+                                                th:data-id="${payment.id}"
+                                                onclick="
+                                                    var id = this.getAttribute('data-id');
+                                                    fetch('/deletePayment/' + id, {
+                                                            method: 'DELETE',
+                                                        }).then(function(response) {
+                                                            if (response.ok) {
+                                                                location.reload();
+                                                            } else {
+                                                                alert('Failed to delete staff record');
+                                                            }
+                                                        });
+                                                ">Delete
+                                        </button>
+                                    </td>
+
                                 </tr>
                                 </tbody>
                             </table>

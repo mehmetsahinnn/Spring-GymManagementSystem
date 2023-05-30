@@ -1,6 +1,5 @@
 package com.example.gigagym.controllers;
 
-import com.example.gigagym.models.Payment;
 import com.example.gigagym.models.Staff;
 import com.example.gigagym.repositories.StaffRepository;
 import com.example.gigagym.services.StaffService;
@@ -62,10 +61,20 @@ public class StaffController {
         return "redirect:/home";
     }
 
-    @DeleteMapping("/staff/{id}")
-    public ResponseEntity<Void> deleteStaff(@PathVariable Integer id) {
-        staffService.deleteStaff(id);
-        return ResponseEntity.noContent().build();
+    @PostMapping("/updateStaff")
+    public String updateData(@RequestParam("id") Integer id,
+                             @RequestParam("name") String name,
+                             @RequestParam("emailAddress") String emailAddress,
+                             @RequestParam("jobTitle") String jobTitle,
+                             @RequestParam("daysOfWork") int daysOfWork,
+                             @RequestParam("startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate) {
+        staffService.updateStaff(id, name, emailAddress, jobTitle, daysOfWork, startDate);
+        return "redirect:/staff";
     }
 
+    @DeleteMapping("/deleteStaff/{id}")
+    public ResponseEntity<?> deleteStaff(@PathVariable Integer id) {
+        staffRepository.deleteStaff(id);
+        return ResponseEntity.ok().build();
+    }
 }

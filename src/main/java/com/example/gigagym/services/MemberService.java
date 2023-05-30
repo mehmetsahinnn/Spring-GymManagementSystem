@@ -1,6 +1,5 @@
 package com.example.gigagym.services;
 
-import com.example.gigagym.models.Member;
 import com.example.gigagym.repositories.MemberRepository;
 import com.example.gigagym.util.DBConnection;
 import org.springframework.stereotype.Service;
@@ -12,7 +11,7 @@ import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
+
 
 
 @Service
@@ -24,10 +23,6 @@ public class MemberService {
         this.memberRepository = memberRepository;
     }
 
-
-    public List<Member> listAll() {
-        return memberRepository.findAll();
-    }
 
     public double calculateTotalCharges() {
         double totalCharges = 0.0;
@@ -112,5 +107,4 @@ public class MemberService {
             return 0.0;
         }
     }
-
 }

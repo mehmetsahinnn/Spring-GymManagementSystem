@@ -251,8 +251,25 @@
                                     <td th:text="${maintenance.id}"></td>
                                     <td th:text="${maintenance.equipmentId}"></td>
                                     <td th:text="${maintenance.maintenanceId}"></td>
-                                    <td th:text="${#dates.format(maintenance.dateOfMaintenance, 'yyyy-MM-dd')}"></td>
-                                    <td th:text="${#dates.format(maintenance.dateOfNextMaintenance, 'yyyy-MM-dd')}"></td>
+                                    <td th:text="${#dates.format(maintenance.dateOfMaintenance, 'dd-MM-yyyy')}"></td>
+                                    <td th:text="${#dates.format(maintenance.dateOfNextMaintenance, 'dd-MM-yyyy')}"></td>
+                                    <td>
+                                        <button class="delete-button btn btn-warning"
+                                                th:data-id="${maintenance.id}"
+                                                onclick="
+                                                    var id = this.getAttribute('data-id');
+                                                    fetch('/deleteMaintenance/' + id, {
+                                                            method: 'DELETE',
+                                                        }).then(function(response) {
+                                                            if (response.ok) {
+                                                                location.reload();
+                                                            } else {
+                                                                alert('Failed to delete staff record');
+                                                            }
+                                                        });
+                                                ">Delete
+                                        </button>
+                                    </td>
                                 </tr>
                                 </tbody>
                             </table>
