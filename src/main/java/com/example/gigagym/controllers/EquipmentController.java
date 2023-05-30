@@ -17,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.List;
 
 @Controller
 public class EquipmentController {
@@ -102,8 +103,15 @@ public class EquipmentController {
     }
 
     @DeleteMapping("/deleteMaintenance/{id}")
-    public ResponseEntity<?> deleteMaintenance(@PathVariable Integer id){
+    public ResponseEntity<?> deleteMaintenance(@PathVariable Integer id) {
         maintenanceRepository.deleteMaintenance(id);
         return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/equipment/search")
+    public String search(@RequestParam("type") String type, Model model) {
+        List<Equipment> equipmentList = equipmentRepository.findByType(type);
+        model.addAttribute("equipmentList", equipmentList);
+        return "equipment";
     }
 }

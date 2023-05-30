@@ -13,7 +13,6 @@ import java.util.Calendar;
 import java.util.Date;
 
 
-
 @Service
 public class MemberService {
 
@@ -69,22 +68,23 @@ public class MemberService {
 
     public int getNumberOfUsersRegisteredLastMonth() {
         Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.MONTH, -1);
-        cal.set(Calendar.DAY_OF_MONTH, 1);
+
+        cal.add(Calendar.DAY_OF_MONTH, -30);
         cal.set(Calendar.HOUR_OF_DAY, 0);
         cal.set(Calendar.MINUTE, 0);
         cal.set(Calendar.SECOND, 0);
         cal.set(Calendar.MILLISECOND, 0);
-        Date lastMonthStartDate = cal.getTime();
+        Date startDate = cal.getTime();
 
-        cal.set(Calendar.DAY_OF_MONTH, cal.getActualMaximum(Calendar.DAY_OF_MONTH));
+        cal = Calendar.getInstance();
+
         cal.set(Calendar.HOUR_OF_DAY, 23);
         cal.set(Calendar.MINUTE, 59);
         cal.set(Calendar.SECOND, 59);
         cal.set(Calendar.MILLISECOND, 999);
-        Date lastMonthEndDate = cal.getTime();
+        Date endDate = cal.getTime();
 
-        return memberRepository.countByRegistrationDateBetween(lastMonthStartDate, lastMonthEndDate);
+        return memberRepository.countByStartDateBetween(startDate, endDate);
     }
 
     public double getMaleRatio() {

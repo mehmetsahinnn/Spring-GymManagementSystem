@@ -31,7 +31,7 @@ public class MemberController {
         model.addAttribute("StaffName", StaffName);
         String JobTitle = (String) session.getAttribute("JobTitle");
 
-        Page<Member> page = memberRepository.findAll(pageable);
+        Page<Member> page = memberRepository.findMembers(pageable);
         model.addAttribute("page", page);
 
         if ("Maintenance Guy".equals(JobTitle)) {

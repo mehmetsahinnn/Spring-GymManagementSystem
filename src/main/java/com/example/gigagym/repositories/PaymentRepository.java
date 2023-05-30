@@ -16,6 +16,8 @@ import java.util.List;
 @Repository
 public interface PaymentRepository extends JpaRepository<Payment, Long> {
 
+
+    @Query("SELECT p FROM Member p WHERE p.id IS NOT NULL AND p.id > 0")
     Page<Payment> findAll(Pageable pageable);
 
     @Query("SELECT p.SID, SUM(p.salary) FROM Payment p GROUP BY p.SID")

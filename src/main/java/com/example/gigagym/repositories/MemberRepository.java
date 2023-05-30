@@ -15,13 +15,15 @@ import java.util.Date;
 @Repository
 public interface MemberRepository extends JpaRepository<Member, Integer> {
 
-    Page<Member> findAll(Pageable pageable);
+    @Query("SELECT m FROM Member m WHERE m.id IS NOT NULL AND m.id > 0")
+    Page<Member> findMembers(Pageable pageable);
 
     @Query("SELECT COUNT(m) FROM Member m WHERE m.sex = :sex")
     long countBySex(@Param("sex") String sex);
 
+
     @Query("SELECT COUNT(m) FROM Member m WHERE m.startDate BETWEEN :startDate AND :endDate")
-    int countByRegistrationDateBetween(@Param("startDate") Date startDate, @Param("endDate") Date endDate);
+    int countByStartDateBetween(@Param("startDate") Date startDate, @Param("endDate") Date endDate);
 
     @Modifying
     @Transactional
