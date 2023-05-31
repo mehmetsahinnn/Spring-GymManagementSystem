@@ -28,7 +28,7 @@ public class HomeController {
         model.addAttribute("numberOfUsersLastMonth", memberService.getNumberOfUsersRegisteredLastMonth());
         model.addAttribute("lastMonthEarnings", memberService.calculateLastMonthEarnings());
         model.addAttribute("totalCharges", memberService.calculateTotalCharges());
-        model.addAttribute("totalPayment", paymentService.calculateTotalPaymentDividedByFive());
+        model.addAttribute("totalPayment", paymentService.calculateTotalPayment());
         model.addAttribute("mostCommonEquipmentType", equipmentService.getMostCommonEquipmentType());
         model.addAttribute("maleRatio", memberService.getMaleRatio() * 100);
         model.addAttribute("femaleRatio", memberService.getFemaleRatio() * 100);
@@ -41,7 +41,7 @@ public class HomeController {
             return "redirect:/maintenance";
         }
         else {
-            return "index";
+            return "home";
         }
     }
 }

@@ -28,7 +28,7 @@
                 </li>
                 <li class="nav-item"></li>
                 <li class="nav-item"></li>
-                <li class="nav-item"><a class="nav-link" th:href="@{/table}"><i
+                <li class="nav-item"><a class="nav-link" th:href="@{/members}"><i
                         class="fas fa-table"></i><span>Members</span></a></li>
                 <li class="nav-item"></li>
                 <li class="nav-item"></li>
@@ -42,8 +42,9 @@
                         <i class="fas fa-table"></i><span>Payment</span>
                     </a>
                     <a class="nav-link active" th:href="@{/staff}" data-bs-target="staff.html"><i
-                            class="fas fa-table"></i><span>Staff</span></a><a class="nav-link" th:href="@{/profile}"><i
-                        class="fas fa-user"></i><span>Profile</span></a>
+                            class="fas fa-table"></i><span>Staff</span></a>
+<!--                    <a class="nav-link" th:href="@{/profile}"><i-->
+<!--                        class="fas fa-user"></i><span>Profile</span></a>-->
                 </li>
 
             </ul>
@@ -59,10 +60,12 @@
                 <div class="container-fluid">
                     <button class="btn btn-link d-md-none rounded-circle me-3" id="sidebarToggleTop" type="button"><i
                             class="fas fa-bars"></i></button>
-                    <form class="d-none d-sm-inline-block me-auto ms-md-3 my-2 my-md-0 mw-100 navbar-search">
-                        <div class="input-group"><input class="bg-light form-control border-0 small" type="text"
-                                                        placeholder="Search for ...">
-                            <button class="btn btn-primary py-0" type="button"><i class="fas fa-search"></i></button>
+                    <form th:action="@{/topSearch}" method="get"
+                          class="d-none d-sm-inline-block me-auto ms-md-3 my-2 my-md-0 mw-100 navbar-search">
+                        <div class="input-group">
+                            <input class="bg-light form-control border-0 small" type="text" placeholder="Search for ..."
+                                   name="page">
+                            <button class="btn btn-primary py-0" type="submit"><i class="fas fa-search"></i></button>
                         </div>
                     </form>
                     <ul class="navbar-nav flex-nowrap ms-auto">
@@ -242,8 +245,8 @@
                                 <input type="text" name="jobTitle" placeholder="Job Title" required>
                                 <input type="text" name="daysOfWork" placeholder="Days of Work" required>
                                 <input type="date" name="startDate" required>
-                                <button type="submit">Submit</button>
-                                <button type="button" id="close-insert-button">Close</button>
+                                <button class="btn btn-user btn-outline-secondary" type="submit">Submit</button>
+                                <button class="btn btn-user btn-outline-secondary" type="button" id="close-insert-button">Close</button>
                             </form>
                             <button class="btn btn-success" role="button" id="insert-button" onclick="showInsertForm()">
                                 Insert
@@ -255,8 +258,8 @@
                                 <input type="text" name="jobTitle" placeholder="Job Title">
                                 <input type="text" name="daysOfWork" placeholder="Days of Work">
                                 <input type="date" name="startDate">
-                                <button type="submit">Update</button>
-                                <button type="button" id="close-update-button">Close</button>
+                                <button class="btn btn-user btn-outline-secondary" type="submit">Update</button>
+                                <button class="btn btn-user btn-outline-secondary" type="button" id="close-update-button">Close</button>
                             </form>
                             <button class="btn btn-info" role="button" id="update-button" onclick="showUpdateMember()">
                                 Update

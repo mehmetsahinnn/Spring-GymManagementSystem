@@ -32,4 +32,5 @@ public class MaintenanceService {
 
         return maintenanceRepository.findByDateOfNextMaintenanceBetween(currentDate, nextWeekDate, pageable);
     }
+
 }

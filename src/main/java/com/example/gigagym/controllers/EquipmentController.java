@@ -15,9 +15,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 public class EquipmentController {
@@ -108,10 +110,12 @@ public class EquipmentController {
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/equipment/search")
-    public String search(@RequestParam("type") String type, Model model) {
-        List<Equipment> equipmentList = equipmentRepository.findByType(type);
-        model.addAttribute("equipmentList", equipmentList);
-        return "equipment";
+    @RequestMapping("/topSearch")
+    public ModelAndView search(@RequestParam("page") String pageName) {
+        if (equipmentService.pageExists(pageName)) {
+            return new ModelAndView("redirect:/" + pageName);
+        } else {
+            return new ModelAndView("redirect:/maintenance");
+        }
     }
 }

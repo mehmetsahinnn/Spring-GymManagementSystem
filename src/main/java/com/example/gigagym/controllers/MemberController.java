@@ -2,6 +2,8 @@ package com.example.gigagym.controllers;
 
 import com.example.gigagym.models.Member;
 import com.example.gigagym.repositories.MemberRepository;
+import com.example.gigagym.services.EquipmentService;
+import com.example.gigagym.services.MemberService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Date;
 
@@ -20,12 +23,14 @@ public class MemberController {
 
 
     final MemberRepository memberRepository;
+    final EquipmentService equipmentService;
 
-    public MemberController(MemberRepository memberRepository) {
+    public MemberController(MemberRepository memberRepository, MemberService memberService, EquipmentService equipmentService) {
         this.memberRepository = memberRepository;
+        this.equipmentService = equipmentService;
     }
 
-    @GetMapping("/table")
+    @GetMapping("/members")
     public String table(Model model, @PageableDefault(size = 250) Pageable pageable, HttpSession session) {
         String StaffName = (String) session.getAttribute("StaffName");
         model.addAttribute("StaffName", StaffName);
@@ -38,11 +43,11 @@ public class MemberController {
 
             return "redirect:/maintenance";
         } else {
-            return "member";
+            return "members";
         }
     }
 
-    @PostMapping("/table")
+    @PostMapping("/members")
     public String addMember(
             @RequestParam("name") String name,
             @RequestParam("emailAddress") String emailAddress,
@@ -76,13 +81,22 @@ public class MemberController {
                               @RequestParam("startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
                               @RequestParam("endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate) {
         memberRepository.updateMember(id, name, emailAddress, sex, address, charge, ptId, startDate, endDate);
-        return "redirect:/table";
+        return "redirect:/members";
     }
 
     @DeleteMapping("/deleteMember/{id}")
     public ResponseEntity<?> deleteMember(@PathVariable Integer id){
         memberRepository.deleteMember(id);
         return ResponseEntity.ok().build();
+    }
+
+    @RequestMapping("/topSearchMember")
+    public ModelAndView search(@RequestParam("page") String pageName) {
+        if (equipmentService.pageExists(pageName)) {
+            return new ModelAndView("redirect:/" + pageName);
+        } else {
+            return new ModelAndView("redirect:/members");
+        }
     }
 }
 

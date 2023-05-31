@@ -27,7 +27,7 @@
                         class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
                 <li class="nav-item"></li>
                 <li class="nav-item"></li>
-                <li class="nav-item"><a class="nav-link active" th:href="@{/table}"><i
+                <li class="nav-item"><a class="nav-link active" th:href="@{/members}"><i
                         class="fas fa-table"></i><span>Members</span></a></li>
                 <li class="nav-item"></li>
                 <li class="nav-item"></li>
@@ -41,8 +41,9 @@
                         <i class="fas fa-table"></i><span>Payment</span>
                     </a>
                     <a class="nav-link" th:href="@{/staff}" data-bs-target="staff.html"><i
-                            class="fas fa-table"></i><span>Staff</span></a><a class="nav-link" th:href="@{/profile}"><i
-                        class="fas fa-user"></i><span>Profile</span></a>
+                            class="fas fa-table"></i><span>Staff</span></a>
+<!--                    <a class="nav-link" th:href="@{/profile}"><i-->
+<!--                        class="fas fa-user"></i><span>Profile</span></a>-->
                 </li>
 
             </ul>
@@ -58,10 +59,12 @@
                 <div class="container-fluid">
                     <button class="btn btn-link d-md-none rounded-circle me-3" id="sidebarToggleTop" type="button"><i
                             class="fas fa-bars"></i></button>
-                    <form class="d-none d-sm-inline-block me-auto ms-md-3 my-2 my-md-0 mw-100 navbar-search">
-                        <div class="input-group"><input class="bg-light form-control border-0 small" type="text"
-                                                        placeholder="Search for ...">
-                            <button class="btn btn-primary py-0" type="button"><i class="fas fa-search"></i></button>
+                    <form th:action="@{/topSearchMaintenance}" method="get"
+                          class="d-none d-sm-inline-block me-auto ms-md-3 my-2 my-md-0 mw-100 navbar-search">
+                        <div class="input-group">
+                            <input class="bg-light form-control border-0 small" type="text" placeholder="Search for ..."
+                                   name="page">
+                            <button class="btn btn-primary py-0" type="submit"><i class="fas fa-search"></i></button>
                         </div>
                     </form>
                     <ul class="navbar-nav flex-nowrap ms-auto">
@@ -71,13 +74,12 @@
                                 class="fas fa-search"></i></a>
                             <div class="dropdown-menu dropdown-menu-end p-3 animated--grow-in"
                                  aria-labelledby="searchDropdown">
-                                <form class="me-auto navbar-search w-100">
-                                    <div class="input-group"><input class="bg-light form-control border-0 small"
-                                                                    type="text" placeholder="Search for ...">
-                                        <div class="input-group-append">
-                                            <button class="btn btn-primary py-0" type="button"><i
-                                                    class="fas fa-search"></i></button>
-                                        </div>
+                                <form th:action="@{/topSearch}" method="get"
+                                      class="d-none d-sm-inline-block me-auto ms-md-3 my-2 my-md-0 mw-100 navbar-search">
+                                    <div class="input-group">
+                                        <input class="bg-light form-control border-0 small" type="text" placeholder="Search for ..."
+                                               name="page">
+                                        <button class="btn btn-primary py-0" type="submit"><i class="fas fa-search"></i></button>
                                     </div>
                                 </form>
                             </div>
@@ -232,7 +234,7 @@
                         </div>
                         <div class="table-responsive table mt-2" id="dataTable" role="grid"
                              aria-describedby="dataTable_info">
-                            <form id="insert-form" style="display: none" action="/table" method="post">
+                            <form id="insert-form" style="display: none" action="/members" method="post">
                                 <input type="text" name="name" placeholder="Name" required>
                                 <input type="email" name="emailAddress" placeholder="Email" required>
                                 <input type="text" name="sex" placeholder="sex" required>
@@ -241,8 +243,10 @@
                                 <input type="number" name="ptId" placeholder="ptId" required>
                                 <input type="date" name="startDate" required>
                                 <input type="date" name="endDate" required>
-                                <button type="submit">Submit</button>
-                                <button type="button" id="close-insert-button">Close</button>
+                                <button class="btn btn-user btn-outline-secondary" type="submit">Submit</button>
+                                <button class="btn btn-user btn-outline-secondary" type="button"
+                                        id="close-insert-button">Close
+                                </button>
                             </form>
                             <button class="btn btn-success" id="insert-button" th:onclick="showInsertMember()">
                                 Insert
@@ -258,8 +262,10 @@
                                 <input type="number" name="ptId" placeholder="ptId" required>
                                 <input type="date" name="startDate" required>
                                 <input type="date" name="endDate" required>
-                                <button type="submit">Update</button>
-                                <button type="button" id="close-update-button">Close</button>
+                                <button class="btn btn-user btn-outline-secondary" type="submit">Update</button>
+                                <button class="btn btn-user btn-outline-secondary" type="button"
+                                        id="close-update-button">Close
+                                </button>
                             </form>
                             <button class="btn btn-info" role="button" id="update-button" th:onclick="showUpdateForm()">
                                 Update
@@ -325,14 +331,14 @@
                                     <ul class="pagination">
                                         <li class="page-item" th:classappend="${page.first ? 'disabled' : ''}">
                                             <a class="page-link"
-                                               th:href="@{/table(page=${page.number - 1})}">Previous</a>
+                                               th:href="@{/members(page=${page.number - 1})}">Previous</a>
                                         </li>
                                         <li class="page-item" th:each="i : ${#numbers.sequence(0, page.totalPages - 1)}"
                                             th:classappend="${i == page.number ? 'active' : ''}">
-                                            <a class="page-link" th:href="@{/table(page=${i})}" th:text="${i + 1}"></a>
+                                            <a class="page-link" th:href="@{/members(page=${i})}" th:text="${i + 1}"></a>
                                         </li>
                                         <li class="page-item" th:classappend="${page.last ? 'disabled' : ''}">
-                                            <a class="page-link" th:href="@{/table(page=${page.number + 1})}">Next</a>
+                                            <a class="page-link" th:href="@{/members(page=${page.number + 1})}">Next</a>
                                         </li>
                                     </ul>
                                 </nav>

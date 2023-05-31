@@ -4,6 +4,9 @@ import com.example.gigagym.repositories.MemberRepository;
 import com.example.gigagym.util.DBConnection;
 import org.springframework.stereotype.Service;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -107,4 +110,5 @@ public class MemberService {
             return 0.0;
         }
     }
+
 }

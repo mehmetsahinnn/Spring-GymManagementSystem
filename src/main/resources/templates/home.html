@@ -26,7 +26,7 @@
                         class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
                 <li class="nav-item"></li>
                 <li class="nav-item"></li>
-                <li class="nav-item"><a class="nav-link" th:href="@{/table}"><i
+                <li class="nav-item"><a class="nav-link" th:href="@{/members}"><i
                         class="fas fa-table"></i><span>Members</span></a></li>
                 <li class="nav-item"></li>
                 <li class="nav-item"></li>
@@ -43,8 +43,8 @@
                     <a class="nav-link" th:href="@{/staff}">
                         <i class="fas fa-table"></i><span>Staff</span>
                     </a>
-                    <a class="nav-link" th:href="@{/profile}"><i
-                            class="fas fa-user"></i><span>Profile</span></a>
+<!--                    <a class="nav-link" th:href="@{/profile}"><i-->
+<!--                            class="fas fa-user"></i><span>Profile</span></a>-->
                 </li>
             </ul>
             <div class="text-center d-none d-md-inline">
@@ -58,10 +58,12 @@
                 <div class="container-fluid">
                     <button class="btn btn-link d-md-none rounded-circle me-3" id="sidebarToggleTop" type="button"><i
                             class="fas fa-bars"></i></button>
-                    <form class="d-none d-sm-inline-block me-auto ms-md-3 my-2 my-md-0 mw-100 navbar-search">
-                        <div class="input-group"><input class="bg-light form-control border-0 small" type="text"
-                                                        placeholder="Search for ...">
-                            <button class="btn btn-primary py-0" type="button"><i class="fas fa-search"></i></button>
+                    <form th:action="@{/topSearch}" method="get"
+                          class="d-none d-sm-inline-block me-auto ms-md-3 my-2 my-md-0 mw-100 navbar-search">
+                        <div class="input-group">
+                            <input class="bg-light form-control border-0 small" type="text" placeholder="Search for ..."
+                                   name="page">
+                            <button class="btn btn-primary py-0" type="submit"><i class="fas fa-search"></i></button>
                         </div>
                     </form>
                     <ul class="navbar-nav flex-nowrap ms-auto">

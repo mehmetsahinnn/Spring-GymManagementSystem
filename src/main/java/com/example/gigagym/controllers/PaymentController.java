@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -32,7 +33,7 @@ public class PaymentController {
         String JobTitle = (String) session.getAttribute("JobTitle");
         model.addAttribute("StaffName", StaffName);
 
-        double totalPaymentDividedByFive = paymentService.calculateTotalPaymentDividedByFive();
+        double totalPaymentDividedByFive = paymentService.calculateTotalPayment();
         session.setAttribute("totalPaymentDividedByFive", totalPaymentDividedByFive);
         model.addAttribute("totalPaymentDividedByFive", totalPaymentDividedByFive);
 
@@ -65,7 +66,7 @@ public class PaymentController {
 
     @PostMapping("/payment/update")
     public String updatePaymentStatus(@RequestParam("paymentId") Long paymentId, HttpSession session) {
-        double totalPaymentDividedByFive = paymentService.calculateTotalPaymentDividedByFive();
+        double totalPaymentDividedByFive = paymentService.calculateTotalPayment();
         session.setAttribute("totalPaymentDividedByFive", totalPaymentDividedByFive);
 
         paymentService.updatePaymentStatus(paymentId, 1);

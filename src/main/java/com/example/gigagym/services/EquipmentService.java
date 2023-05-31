@@ -7,6 +7,9 @@ import com.example.gigagym.repositories.EquipmentRepository;
 import com.example.gigagym.repositories.MaintenanceRepository;
 import org.springframework.stereotype.Service;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -48,4 +51,8 @@ public class EquipmentService {
     }
 
 
+    public boolean pageExists(String pageName) {
+        Path filePath = Paths.get("src/main/resources/templates/" + pageName + ".html");
+        return Files.exists(filePath);
+    }
 }
