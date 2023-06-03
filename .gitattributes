@@ -1,0 +1,7 @@
+*.html linguist-vendored
+*.css linguist-vendored
+
+*.html linguist-detectable=false
+*.css linguist-detectable=false
+*.sass linguist-detectable=false
+*.less linguist-detectable=false
