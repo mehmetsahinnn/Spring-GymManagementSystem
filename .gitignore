@@ -37,3 +37,10 @@ build/
 /pom.xml
 /mvnw.cmd
 /mvnw
+
+/src/main/resources/templates
+/src/main/resources/static/bootstrap
+/src/main/resources/static/css
+/src/main/resources/static/fonts
+/src/main/resources/static/img
+/src/main/resources/static/js
