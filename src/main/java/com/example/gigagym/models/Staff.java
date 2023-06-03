@@ -19,6 +19,9 @@ public class Staff {
     @Column(name = "emailAddress")
     private String emailAddress;
 
+    @Column(name = "password")
+    private String password;
+
     @Column(name = "jobTitle")
     private String jobTitle;
 
@@ -29,13 +32,13 @@ public class Staff {
     private Date startDate;
 
 
-
     public Staff() {
     }
 
-    public Staff(String name, String emailAddress, String jobTitle, Integer daysOfWork, Date startDate) {
+    public Staff(String name, String emailAddress,String password, String jobTitle, Integer daysOfWork, Date startDate) {
         this.name = name;
         this.emailAddress = emailAddress;
+        this.password = password;
         this.jobTitle = jobTitle;
         this.daysOfWork = daysOfWork;
         this.startDate = startDate;
@@ -64,6 +67,14 @@ public class Staff {
 
     public void setEmailAddress(String emailAddress) {
         this.emailAddress = emailAddress;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getJobTitle() {

@@ -33,4 +33,12 @@ public class MaintenanceService {
         return maintenanceRepository.findByDateOfNextMaintenanceBetween(currentDate, nextWeekDate, pageable);
     }
 
+    public int nextMaintenance() {
+        Calendar currentDate = Calendar.getInstance();
+        Calendar nextWeekDate = Calendar.getInstance();
+        nextWeekDate.add(Calendar.DATE, 7);
+        List<Maintenance> maintenanceList = maintenanceRepository.findByDateOfNextMaintenanceBetween(currentDate.getTime(), nextWeekDate.getTime());
+        return maintenanceList.size();
+    }
+
 }

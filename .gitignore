@@ -33,6 +33,7 @@ build/
 .vscode/
 /src/main/resources/application.properties
 /src/main/java/com/example/gigagym/util/DBConnection.java
+/src/main/java/com/example/gigagym/util/SecurityConfig.java
 /pom.xml
 /mvnw.cmd
 /mvnw

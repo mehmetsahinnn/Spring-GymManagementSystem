@@ -14,6 +14,7 @@ public class StaffService {
 
     private final StaffRepository staffRepository;
 
+
     @Autowired
     public StaffService(StaffRepository staffRepository) {
         this.staffRepository = staffRepository;
@@ -23,8 +24,14 @@ public class StaffService {
         return staffRepository.findAll();
     }
 
+
+    public boolean authenticate(String name, String password) {
+        Staff user = staffRepository.findByName(name);
+        return user != null && user.getPassword().equals(password);
+    }
+
     public Staff authenticate(String email) {
-        return staffRepository.findByEmail(email);
+        return staffRepository.findByEmailAddress(email);
     }
 
     public void updateStaff(Integer id, String name, String emailAddress, String jobTitle, Integer daysOfWork, Date startDate) {

@@ -18,37 +18,42 @@
         <div class="col-md-9 col-lg-12 col-xl-10">
             <div class="card shadow-lg o-hidden border-0 my-5">
                 <div class="card-body p-0">
-                    <div class="row">
-                        <div class="col-lg-4 d-none d-lg-flex">
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="p-5">
-                                <div class="text-center">
-                                    <h4 class="text-dark mb-4">Welcome Back!</h4>
-                                </div>
-                                <form class="user" method="post">
-                                    <div class="mb-3">
-                                        <input class="form-control form-control-user" type="email"
-                                               id="exampleInputEmail" placeholder="Email Address" name="email">
+                    <div class="row justify-content-center">
+                        <div class="col-md-6">
+                            <div class="card shadow-lg o-hidden border-0 my-5">
+                                <div class="card-body p-0">
+                                    <div class="p-5">
+                                        <div class="text-center">
+                                            <h4 class="text-dark mb-4">Welcome Back!</h4>
+                                        </div>
+                                        <form class="user" method="post" th:action="@{/}">
+                                            <div class="mb-3">
+                                                <input class="form-control form-control-user" type="text"
+                                                       id="exampleInputName"
+                                                       placeholder="Name" name="name">
+                                            </div>
+                                            <div class="mb-3">
+                                                <input class="form-control form-control-user" type="password"
+                                                       id="exampleInputPassword"
+                                                       placeholder="Password" name="password">
+                                            </div>
+                                            <div class="mb-3" th:if="${error}" style="color: red;">
+                                                <p th:text="${error}"></p>
+                                            </div>
+                                            <button class="btn btn-primary btn-user w-100" type="submit">Login</button>
+                                        </form>
+                                        <hr>
+                                        <a class="btn btn-primary btn-google btn-user w-100 mb-2" role="button"
+                                           onclick="alert('Login with Google is not working right now!');">
+                                            <i class="fab fa-google"></i>&nbsp; Login with Google
+                                        </a>
+                                        <a class="btn btn-primary btn-facebook btn-user w-100" role="button"
+                                           onclick="alert('Login with Facebook is not working right now!');">
+                                            <i class="fab fa-facebook-f"></i>&nbsp; Login with Facebook
+                                        </a>
                                     </div>
-                                    <div class="mb-3" th:if="${error}" th:text="${error}" style="color: red;"></div>
-                                    <div class="mb-3"></div>
-                                    <button class="btn btn-primary d-block btn-user w-100" type="submit">Login</button>
-                                    <hr>
-
-                                    <a class="btn btn-primary d-block btn-google btn-user w-100 mb-2" role="button"
-                                       onclick="alert('Login with google is not working right now !');">
-                                        <i class="fab fa-google" th:href="@{/login}"></i>&nbsp; Login with Google
-                                    </a>
-                                    <a class="btn btn-primary d-block btn-facebook btn-user w-100" role="button"
-                                       onclick="alert('Login with facebook is not working right now !');">
-                                        <i class="fab fa-facebook-f" th:href="@{/login}"></i>&nbsp; Login with Facebook
-                                    </a>
-                                    <hr>
-                                </form>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-lg-4 d-none d-lg-flex">
                         </div>
                     </div>
                 </div>
@@ -61,5 +66,4 @@
 <script th:src="@{/js/theme.js}"></script>
 <script th:src="@{/js/dump.js}"></script>
 </body>
-
 </html>

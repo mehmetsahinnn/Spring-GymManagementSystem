@@ -38,16 +38,9 @@ public class EquipmentService {
         return (String) results.get(0)[0];
     }
 
-    public int nextMaintenance() {
-        Calendar currentDate = Calendar.getInstance();
-        Calendar nextWeekDate = Calendar.getInstance();
-        nextWeekDate.add(Calendar.DATE, 7);
-        List<Maintenance> maintenanceList = maintenanceRepository.findByDateOfNextMaintenanceBetween(currentDate.getTime(), nextWeekDate.getTime());
-        return maintenanceList.size();
-    }
 
     public void deleteStaff(Long id) {
-        equipmentRepository.deleteById(id);
+        equipmentRepository.deleteEquipment(id);
     }
 
 

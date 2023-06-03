@@ -12,12 +12,14 @@ public class HomeController {
     private final MemberService memberService;
     private final PaymentService paymentService;
     private final EquipmentService equipmentService;
+    private final MaintenanceService maintenanceService;
 
 
-    public HomeController(MemberService memberService, PaymentService paymentService, MaintenanceService maintenanceService, EquipmentService equipmentService, StaffService staffService) {
+    public HomeController(MemberService memberService, PaymentService paymentService, EquipmentService equipmentService, MaintenanceService maintenanceService) {
         this.memberService = memberService;
         this.paymentService = paymentService;
         this.equipmentService = equipmentService;
+        this.maintenanceService = maintenanceService;
     }
 
     @RequestMapping("/home")
@@ -32,13 +34,17 @@ public class HomeController {
         model.addAttribute("mostCommonEquipmentType", equipmentService.getMostCommonEquipmentType());
         model.addAttribute("maleRatio", memberService.getMaleRatio() * 100);
         model.addAttribute("femaleRatio", memberService.getFemaleRatio() * 100);
-        model.addAttribute("maintenanceCount", equipmentService.nextMaintenance());
+        model.addAttribute("maintenanceCount", maintenanceService.nextMaintenance());
         model.addAttribute("StaffName", StaffName);
 
 
         if ("Maintenance Guy".equals(JobTitle)) {
 
             return "redirect:/maintenance";
+        }
+        if ("Personal Trainer".equals(JobTitle)) {
+
+            return "redirect:/members";
         }
         else {
             return "home";

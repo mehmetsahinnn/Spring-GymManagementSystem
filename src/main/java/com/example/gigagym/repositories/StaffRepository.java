@@ -15,11 +15,9 @@ import java.util.Optional;
 public interface StaffRepository extends JpaRepository<Staff, Integer> {
 
 
-    @Query("SELECT s FROM Staff s WHERE s.emailAddress = ?1")
-    Staff findByEmail(String email);
+    Staff findByName(String name);
+    Staff findByEmailAddress(String emailAddress);
 
-    @Query("SELECT s FROM Staff s WHERE s.id = :id")
-    Optional<Staff> findByIdCustom(@Param("id") Long id);
 
     @Modifying
     @Transactional

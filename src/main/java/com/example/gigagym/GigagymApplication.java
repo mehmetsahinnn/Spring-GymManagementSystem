@@ -17,16 +17,6 @@ public class GigagymApplication {
     }
 
     @Bean
-    public DBConnection dbConnection() {
-        DBConnection dbConnection = new DBConnection();
-        try {
-            DBConnection.connect("jdbc:mysql://localhost:3306/gym?useSSL=false&serverTimezone=UTC", "root", "1234");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return dbConnection;
-    }
-    @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
             @Override
