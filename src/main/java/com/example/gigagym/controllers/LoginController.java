@@ -20,14 +20,14 @@ public class LoginController {
     }
 
 @PostMapping("/")
-public String login(@RequestParam("name") String name,
+public String login(@RequestParam("name") String emailAddress,
                     @RequestParam("password") String password,
                     Model model,
                     HttpSession session) {
-    boolean authenticated = staffService.authenticate(name, password);
+    boolean authenticated = staffService.authenticate(emailAddress, password);
 
     if (authenticated) {
-        Staff staff = staffRepository.findByName(name);
+        Staff staff = staffRepository.findByEmailAddress(emailAddress);
 
         session.setAttribute("StaffName", staff.getName());
         session.setAttribute("JobTitle", staff.getJobTitle());

@@ -242,6 +242,7 @@
                             <form id="insert-form" style="display: none" action="/staff" method="post">
                                 <input type="text" name="name" placeholder="Name" required>
                                 <input type="email" name="emailAddress" placeholder="Email" required>
+                                <input type="text" name="password" placeholder="Password">
                                 <input type="text" name="jobTitle" placeholder="Job Title" required>
                                 <input type="text" name="daysOfWork" placeholder="Days of Work" required>
                                 <input type="date" name="startDate" required>
@@ -257,6 +258,7 @@
                                 <input type="text" name="id" placeholder="ID" required>
                                 <input type="text" name="name" placeholder="Name">
                                 <input type="email" name="emailAddress" placeholder="Email">
+                                <input type="text" name="password" placeholder="Password">
                                 <input type="text" name="jobTitle" placeholder="Job Title">
                                 <input type="text" name="daysOfWork" placeholder="Days of Work">
                                 <input type="date" name="startDate">
@@ -286,7 +288,7 @@
                                     <td th:text="${staff.id}"></td>
                                     <td th:text="${staff.name}"></td>
                                     <td th:text="${staff.emailAddress}"></td>
-                                    <td th:text="${staff.getPassword}"></td>
+                                    <td th:text="${staff.password}"></td>
                                     <td th:text="${staff.jobTitle}"></td>
                                     <td th:text="${staff.daysOfWork}"></td>
                                     <td th:text="${#dates.format(staff.startDate, 'dd-MM-yyyy')}"></td>

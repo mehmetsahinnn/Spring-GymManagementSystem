@@ -48,12 +48,14 @@ public class StaffController {
     @PostMapping("/staff")
     public String saveData(@RequestParam("name") String name,
                            @RequestParam("emailAddress") String emailAddress,
+                           @RequestParam("password") String password,
                            @RequestParam("jobTitle") String jobTitle,
                            @RequestParam("daysOfWork") int daysOfWork,
                            @RequestParam("startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate) {
         Staff staff = new Staff();
         staff.setName(name);
         staff.setEmailAddress(emailAddress);
+        staff.setPassword(password);
         staff.setJobTitle(jobTitle);
         staff.setDaysOfWork(daysOfWork);
         staff.setStartDate(startDate);
@@ -64,11 +66,12 @@ public class StaffController {
     @PostMapping("/updateStaff")
     public String updateData(@RequestParam("id") Integer id,
                              @RequestParam("name") String name,
+                             @RequestParam("password") String password,
                              @RequestParam("emailAddress") String emailAddress,
                              @RequestParam("jobTitle") String jobTitle,
                              @RequestParam("daysOfWork") int daysOfWork,
                              @RequestParam("startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate) {
-        staffService.updateStaff(id, name, emailAddress, jobTitle, daysOfWork, startDate);
+        staffService.updateStaff(id, name, emailAddress, password, jobTitle, daysOfWork, startDate);
         return "redirect:/staff";
     }
 

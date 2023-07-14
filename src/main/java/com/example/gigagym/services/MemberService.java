@@ -4,6 +4,8 @@ import com.example.gigagym.repositories.MemberRepository;
 import com.example.gigagym.util.DBConnection;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -11,9 +13,12 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 
 @Service
@@ -27,46 +32,11 @@ public class MemberService {
 
 
     public double calculateTotalCharges() {
-        double totalCharges = 0.0;
-        LocalDate currentDate = LocalDate.now();
-
-        String query = "SELECT charge, startDate FROM members";
-        try (Connection connection = DBConnection.getConnection();
-             Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(query)) {
-            while (resultSet.next()) {
-                double charge = resultSet.getDouble("charge");
-                LocalDate startDate = resultSet.getDate("startDate").toLocalDate();
-                long durationMonths = (startDate.until(currentDate).getDays()) / 30;
-                if (durationMonths == 0) {
-                    durationMonths = 1;
-                    double rowCharge = charge * durationMonths;
-                    totalCharges += rowCharge;
-                } else {
-                    double rowCharge = charge * durationMonths;
-                    totalCharges += rowCharge;
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return totalCharges;
+        return memberRepository.calculateTotalCharges();
     }
 
     public double calculateLastMonthEarnings() {
-        double LastMonthEarnings = 0.0;
-
-        String query = "SELECT SUM(charge) AS total FROM members";
-        try (Connection connection = DBConnection.getConnection();
-             Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(query)) {
-            resultSet.next();
-            LastMonthEarnings = resultSet.getDouble("total");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return LastMonthEarnings;
+        return memberRepository.sumCharges();
     }
 
     public int getNumberOfUsersRegisteredLastMonth() {
@@ -95,7 +65,10 @@ public class MemberService {
         long totalCount = memberRepository.count();
 
         if (totalCount > 0) {
-            return (double) maleCount / totalCount;
+            double ratio = (double) maleCount / totalCount;
+            BigDecimal rounded = BigDecimal.valueOf(ratio).setScale(3, RoundingMode.DOWN);
+
+            return rounded.doubleValue();
         } else {
             return 0.0;
         }
@@ -104,11 +77,16 @@ public class MemberService {
     public double getFemaleRatio() {
         long femaleCount = memberRepository.countBySex("female");
         long totalCount = memberRepository.count();
+
         if (totalCount > 0) {
-            return (double) femaleCount / totalCount;
+            double ratio = (double) femaleCount / totalCount;
+            BigDecimal rounded = BigDecimal.valueOf(ratio).setScale(3, RoundingMode.UP);
+
+            return rounded.doubleValue();
         } else {
             return 0.0;
         }
     }
+
 
 }

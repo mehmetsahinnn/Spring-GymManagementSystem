@@ -21,6 +21,11 @@ public interface MemberRepository extends JpaRepository<Member, Integer> {
     @Query("SELECT COUNT(m) FROM Member m WHERE m.sex = :sex")
     long countBySex(@Param("sex") String sex);
 
+    @Query("SELECT SUM(charge) FROM Member")
+    double sumCharges();
+
+    @Query("SELECT sum(charge * (MONTH(CURDATE()) - MONTH(startDate))) AS totalCharge FROM Member")
+    double calculateTotalCharges();
 
     @Query("SELECT COUNT(m) FROM Member m WHERE m.startDate BETWEEN :startDate AND :endDate")
     int countByStartDateBetween(@Param("startDate") Date startDate, @Param("endDate") Date endDate);

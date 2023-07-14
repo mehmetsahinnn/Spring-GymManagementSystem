@@ -1,0 +1,8 @@
+package com.example.gigagym.services;
+
+import org.springframework.stereotype.Service;
+
+@Service
+public class LoginService {
+
+}

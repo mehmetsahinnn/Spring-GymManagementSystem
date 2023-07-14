@@ -16,15 +16,17 @@ public interface StaffRepository extends JpaRepository<Staff, Integer> {
 
 
     Staff findByName(String name);
+
     Staff findByEmailAddress(String emailAddress);
 
 
     @Modifying
     @Transactional
-    @Query("UPDATE Staff s SET s.name = :name, s.emailAddress = :emailAddress, s.jobTitle = :jobTitle, s.daysOfWork = :daysOfWork, s.startDate = :startDate WHERE s.id = :id")
+    @Query("UPDATE Staff s SET s.name = :name, s.password = :password, s.emailAddress = :emailAddress, s.jobTitle = :jobTitle, s.daysOfWork = :daysOfWork, s.startDate = :startDate WHERE s.id = :id")
     void updateStaff(@Param("id") Integer id,
                      @Param("name") String name,
                      @Param("emailAddress") String emailAddress,
+                     @Param("password") String password,
                      @Param("jobTitle") String jobTitle,
                      @Param("daysOfWork") Integer daysOfWork,
                      @Param("startDate") Date startDate);

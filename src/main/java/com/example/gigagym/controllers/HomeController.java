@@ -5,7 +5,9 @@ import com.example.gigagym.services.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @Controller
 public class HomeController {
@@ -22,7 +24,7 @@ public class HomeController {
         this.maintenanceService = maintenanceService;
     }
 
-    @RequestMapping("/home")
+    @GetMapping("/home")
     public String index(Model model, HttpSession session) {
         String StaffName = (String) session.getAttribute("StaffName");
         String JobTitle = (String) session.getAttribute("JobTitle");
