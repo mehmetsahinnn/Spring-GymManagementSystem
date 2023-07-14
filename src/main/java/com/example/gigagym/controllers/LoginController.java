@@ -2,7 +2,9 @@ package com.example.gigagym.controllers;
 
 import com.example.gigagym.models.Staff;
 import com.example.gigagym.repositories.StaffRepository;
+import com.example.gigagym.services.LoginService;
 import com.example.gigagym.services.StaffService;
+import com.example.gigagym.repositories.LoginRepository;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,11 +14,15 @@ import org.springframework.web.bind.annotation.*;
 public class LoginController {
 
     private final StaffService staffService;
+    private final LoginService loginService;
     public final StaffRepository staffRepository;
+    public final LoginRepository loginRepository;
 
-    public LoginController(StaffService staffService, StaffRepository staffRepository) {
+    public LoginController(StaffService staffService, LoginService loginService, StaffRepository staffRepository, LoginRepository loginRepository) {
         this.staffService = staffService;
+        this.loginService = loginService;
         this.staffRepository = staffRepository;
+        this.loginRepository = loginRepository;
     }
 
 @PostMapping("/")
@@ -24,10 +30,10 @@ public String login(@RequestParam("name") String emailAddress,
                     @RequestParam("password") String password,
                     Model model,
                     HttpSession session) {
-    boolean authenticated = staffService.authenticate(emailAddress, password);
+    boolean authenticated = loginService.authenticate(emailAddress, password);
 
     if (authenticated) {
-        Staff staff = staffRepository.findByEmailAddress(emailAddress);
+        Staff staff = loginRepository.findByEmailAddress(emailAddress);
 
         session.setAttribute("StaffName", staff.getName());
         session.setAttribute("JobTitle", staff.getJobTitle());

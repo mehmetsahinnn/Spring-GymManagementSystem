@@ -25,12 +25,6 @@ public class StaffService {
     }
 
 
-    public boolean authenticate(String emailAddress, String password) {
-        Staff user = staffRepository.findByEmailAddress(emailAddress);
-        return user != null && user.getPassword().equals(password);
-    }
-
-
     public void updateStaff(Integer id, String name, String emailAddress, String password, String jobTitle, Integer daysOfWork, Date startDate) {
         staffRepository.updateStaff(id, name, emailAddress, password, jobTitle, daysOfWork, startDate);
     }

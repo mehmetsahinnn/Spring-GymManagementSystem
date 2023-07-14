@@ -15,11 +15,6 @@ import java.util.Optional;
 public interface StaffRepository extends JpaRepository<Staff, Integer> {
 
 
-    Staff findByName(String name);
-
-    Staff findByEmailAddress(String emailAddress);
-
-
     @Modifying
     @Transactional
     @Query("UPDATE Staff s SET s.name = :name, s.password = :password, s.emailAddress = :emailAddress, s.jobTitle = :jobTitle, s.daysOfWork = :daysOfWork, s.startDate = :startDate WHERE s.id = :id")
