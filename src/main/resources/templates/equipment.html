@@ -41,8 +41,8 @@
                     </a>
                     <a class="nav-link" th:href="@{/staff}" data-bs-target="staff.html"><i
                             class="fas fa-table"></i><span>Staff</span></a>
-<!--                    <a class="nav-link" th:href="@{/profile}"><i-->
-<!--                        class="fas fa-user"></i><span>Profile</span></a>-->
+                    <!--                    <a class="nav-link" th:href="@{/profile}"><i-->
+                    <!--                        class="fas fa-user"></i><span>Profile</span></a>-->
                 </li>
             </ul>
             <div class="text-center d-none d-md-inline">
@@ -56,7 +56,7 @@
                 <div class="container-fluid">
                     <button class="btn btn-link d-md-none rounded-circle me-3" id="sidebarToggleTop" type="button"><i
                             class="fas fa-bars"></i></button>
-                    <form th:action="@{/topSearch}" method="get"
+                    <form th:action="@{/topSearchEquipment}" method="get"
                           class="d-none d-sm-inline-block me-auto ms-md-3 my-2 my-md-0 mw-100 navbar-search">
                         <div class="input-group">
                             <input class="bg-light form-control border-0 small" type="text" placeholder="Search for ..."
@@ -219,15 +219,22 @@
                                         <option value="50" th:selected="${equipment.size == 50}">50</option>
                                         <option value="100" th:selected="${equipment.size == 100}">100</option>
                                         <option value="250" th:selected="${equipment.size == 250}">250</option>
-                                    </select>&nbsp;
-                                    &nbsp;</label></div>
+                                    </select>
+                                </label>
+                                </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="text-md-end dataTables_filter" id="dataTable_filter">
-                                    <label class="form-label">
-                                        <input type="search" class="form-control form-control-sm"
-                                               aria-controls="dataTable"
-                                               placeholder="Search"></label></div>
+                                    <form id="searchForm" method="get" action=""
+                                          class="d-none d-sm-inline-block me-auto ms-md-3 my-2 my-md-0 mw-100 navbar-search">
+                                        <div class="input-group">
+                                            <label class="form-label">
+                                                <input type="search" class="form-control form-control-sm" id="nameInput"
+                                                       aria-controls="dataTable" placeholder="Search">
+                                            </label>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                         <div class="table-responsive table mt-2" id="dataTable" role="grid"
@@ -238,8 +245,27 @@
                                 <input type="text" name="model" placeholder="Model" required>
                                 <input type="date" name="purchaseDate" required>
                                 <button class="btn btn-user btn-outline-secondary" type="submit">Submit</button>
+                                <button class="btn btn-user btn-outline-secondary" type="button"
+                                        id="close-insert-button">Close
+                                </button>
                             </form>
-                            <button class="btn btn-success" id="insert-button" th:onclick="showInsertForm()">Insert
+                            <button class="btn btn-success" id="insert-button" th:onclick="showInsertEquipment()">Insert
+                            </button>
+
+                            <form id="update-form" style="display: none" action="/updateEquipment" method="post">
+                                <input type="text" name="id" placeholder="ID" required>
+                                <input type="text" name="type" placeholder="Type" required>
+                                <input type="text" name="manufacturer" placeholder="Manufacturer" required>
+                                <input type="text" name="model" placeholder="Model" required>
+                                <input type="date" name="purchaseDate" required>
+                                <button class="btn btn-user btn-outline-secondary" type="submit">Update</button>
+                                <button class="btn btn-user btn-outline-secondary" type="button"
+                                        id="close-update-button">Close
+                                </button>
+                            </form>
+                            <button class="btn btn-info" role="button" id="update-button"
+                                    th:onclick="showUpdateEquipment()">
+                                Update
                             </button>
                             <table class="table my-0" id="dataTable">
                                 <thead>
@@ -251,7 +277,7 @@
                                     <th>Purchase Date</th>
                                 </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="tableBody">
                                 <tr th:each="equipment : ${equipment.content}">
                                     <td th:text="${equipment.id}"></td>
                                     <td th:text="${equipment.type}"></td>
@@ -324,6 +350,7 @@
 <script th:src="@{/js/theme.js}"></script>
 <script th:src="@{/js/dump.js}"></script>
 <script th:src="@{/js/staff.js}"></script>
+<script th:src="@{/js/equipment.js}"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
     $(document).ready(function () {

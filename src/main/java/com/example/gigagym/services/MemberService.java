@@ -1,24 +1,16 @@
 package com.example.gigagym.services;
 
+import com.example.gigagym.models.Member;
 import com.example.gigagym.repositories.MemberRepository;
-import com.example.gigagym.util.DBConnection;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
 
 
 @Service
@@ -88,5 +80,15 @@ public class MemberService {
         }
     }
 
+    public Page<Member> findMembersByName(String name, Pageable pageable) {
+        Specification<Member> spec = (root, query, cb) -> {
+            if (name != null) {
+                return cb.like(root.get("name"), "%" + name + "%");
+            } else {
+                return cb.conjunction();
+            }
+        };
+        return memberRepository.findAll(spec, pageable);
+    }
 
 }

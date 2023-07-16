@@ -2,17 +2,22 @@ package com.example.gigagym.controllers;
 
 import com.example.gigagym.models.Staff;
 import com.example.gigagym.repositories.StaffRepository;
+import com.example.gigagym.services.EquipmentService;
 import com.example.gigagym.services.StaffService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 
 import java.util.Date;
-import java.util.List;
 
 @Controller
 public class StaffController {
@@ -20,27 +25,36 @@ public class StaffController {
     private final StaffService staffService;
     private final StaffRepository staffRepository;
 
-    public StaffController(StaffService staffService, StaffRepository staffRepository) {
+    private final EquipmentService equipmentService;
+
+    public StaffController(StaffService staffService, StaffRepository staffRepository, EquipmentService equipmentService) {
         this.staffService = staffService;
         this.staffRepository = staffRepository;
+        this.equipmentService = equipmentService;
     }
 
     @GetMapping("/staff")
-    public String staff(Model model, HttpSession session) {
+    public Object staff(Model model, @PageableDefault(size = 250) Pageable pageable, @RequestParam(required = false) String name, HttpSession session, HttpServletRequest request) {
+
         String StaffName = (String) session.getAttribute("StaffName");
         String JobTitle = (String) session.getAttribute("JobTitle");
         model.addAttribute("StaffName", StaffName);
 
-        List<Staff> listStaff = staffService.listAll();
-        model.addAttribute("listStaff", listStaff);
+        Page<Staff> staff = staffService.findStaffByName(name, pageable);
+        model.addAttribute("listStaff", staff);
 
-        if ("Maintenance Guy".equals(JobTitle)) {
-
-            return "redirect:/maintenance";
-        } else if ("Personal Trainer".equals(JobTitle)) {
-            return "redirect:/home";
+        String requestedWithHeader = request.getHeader("X-Requested-With");
+        if ("XMLHttpRequest".equals(requestedWithHeader)) {
+            return ResponseEntity.ok(staff);
         } else {
-            return "staff";
+            if ("Maintenance Guy".equals(JobTitle)) {
+
+                return "redirect:/maintenance";
+            } else if ("Personal Trainer".equals(JobTitle)) {
+                return "redirect:/home";
+            } else {
+                return "staff";
+            }
         }
     }
 
@@ -79,5 +93,22 @@ public class StaffController {
     public ResponseEntity<?> deleteStaff(@PathVariable Integer id) {
         staffRepository.deleteStaff(id);
         return ResponseEntity.ok().build();
+    }
+
+    @RequestMapping("/topSearchStaff")
+    public ModelAndView search(@RequestParam("page") String pageName) {
+        if (equipmentService.pageExists(pageName)) {
+            return new ModelAndView("redirect:/" + pageName);
+        } else {
+            return new ModelAndView("redirect:/staff");
+        }
+    }
+
+    @RequestMapping("/searchStaff/{name}")
+    public ModelAndView searchEquipment(@PathVariable String name) {
+        if (name == null) {
+            return new ModelAndView("redirect:/staff");
+        }
+        return new ModelAndView("redirect:/staff?name=" + name);
     }
 }

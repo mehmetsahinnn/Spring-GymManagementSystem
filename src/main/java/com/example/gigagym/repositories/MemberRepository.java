@@ -3,6 +3,7 @@ package com.example.gigagym.repositories;
 import com.example.gigagym.models.Member;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -13,10 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Date;
 
 @Repository
-public interface MemberRepository extends JpaRepository<Member, Integer> {
-
-    @Query("SELECT m FROM Member m WHERE m.id IS NOT NULL AND m.id > 0")
-    Page<Member> findMembers(Pageable pageable);
+public interface MemberRepository extends JpaRepository<Member, Integer>, JpaSpecificationExecutor<Member> {
 
     @Query("SELECT COUNT(m) FROM Member m WHERE m.sex = :sex")
     long countBySex(@Param("sex") String sex);

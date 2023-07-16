@@ -42,8 +42,8 @@
                     </a>
                     <a class="nav-link" th:href="@{/staff}" data-bs-target="staff.html"><i
                             class="fas fa-table"></i><span>Staff</span></a>
-<!--                    <a class="nav-link" th:href="@{/profile}"><i-->
-<!--                        class="fas fa-user"></i><span>Profile</span></a>-->
+                    <!--                    <a class="nav-link" th:href="@{/profile}"><i-->
+                    <!--                        class="fas fa-user"></i><span>Profile</span></a>-->
                 </li>
 
             </ul>
@@ -59,7 +59,7 @@
                 <div class="container-fluid">
                     <button class="btn btn-link d-md-none rounded-circle me-3" id="sidebarToggleTop" type="button"><i
                             class="fas fa-bars"></i></button>
-                    <form th:action="@{/topSearchMaintenance}" method="get"
+                    <form th:action="@{/topSearchMember}" method="get"
                           class="d-none d-sm-inline-block me-auto ms-md-3 my-2 my-md-0 mw-100 navbar-search">
                         <div class="input-group">
                             <input class="bg-light form-control border-0 small" type="text" placeholder="Search for ..."
@@ -77,9 +77,11 @@
                                 <form th:action="@{/topSearch}" method="get"
                                       class="d-none d-sm-inline-block me-auto ms-md-3 my-2 my-md-0 mw-100 navbar-search">
                                     <div class="input-group">
-                                        <input class="bg-light form-control border-0 small" type="text" placeholder="Search for ..."
+                                        <input class="bg-light form-control border-0 small" type="text"
+                                               placeholder="Search for ..."
                                                name="page">
-                                        <button class="btn btn-primary py-0" type="submit"><i class="fas fa-search"></i></button>
+                                        <button class="btn btn-primary py-0" type="submit"><i class="fas fa-search"></i>
+                                        </button>
                                     </div>
                                 </form>
                             </div>
@@ -226,10 +228,17 @@
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <div class="text-md-end dataTables_filter" id="dataTable_filter"><label
-                                        class="form-label"><input type="search" class="form-control form-control-sm"
-                                                                  aria-controls="dataTable"
-                                                                  placeholder="Search"></label></div>
+                                <div class="text-md-end dataTables_filter" id="dataTable_filter">
+                                    <form id="searchForm" method="get" action=""
+                                          class="d-none d-sm-inline-block me-auto ms-md-3 my-2 my-md-0 mw-100 navbar-search">
+                                        <div class="input-group">
+                                            <label class="form-label">
+                                                <input type="search" class="form-control form-control-sm" id="nameInput"
+                                                       aria-controls="dataTable" placeholder="Search">
+                                            </label>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                         <div class="table-responsive table mt-2" id="dataTable" role="grid"
@@ -285,7 +294,7 @@
                                     <th>End Date</th>
                                 </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="tableBody">
                                 <tr th:each="member : ${page.content}">
                                     <td th:text="${member.id}"></td>
                                     <td th:text="${member.name}"></td>
@@ -335,7 +344,8 @@
                                         </li>
                                         <li class="page-item" th:each="i : ${#numbers.sequence(0, page.totalPages - 1)}"
                                             th:classappend="${i == page.number ? 'active' : ''}">
-                                            <a class="page-link" th:href="@{/members(page=${i})}" th:text="${i + 1}"></a>
+                                            <a class="page-link" th:href="@{/members(page=${i})}"
+                                               th:text="${i + 1}"></a>
                                         </li>
                                         <li class="page-item" th:classappend="${page.last ? 'disabled' : ''}">
                                             <a class="page-link" th:href="@{/members(page=${page.number + 1})}">Next</a>
@@ -344,7 +354,6 @@
                                 </nav>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -361,6 +370,7 @@
 <script th:src="@{/js/bs-init.js}"></script>
 <script th:src="@{/js/theme.js}"></script>
 <script th:src="@{/js/dump.js}"></script>
+<script th:src="@{/js/new.js}"></script>
 <script th:src="@{/js/member.js}"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>

@@ -346,7 +346,7 @@
                 <div class="container-fluid">
                     <button class="btn btn-link d-md-none rounded-circle me-3" id="sidebarToggleTop" type="button"><i
                             class="fas fa-bars"></i></button>
-                    <form th:action="@{/topSearch}" method="get"
+                    <form th:action="@{/topSearchPayment}" method="get"
                           class="d-none d-sm-inline-block me-auto ms-md-3 my-2 my-md-0 mw-100 navbar-search">
                         <div class="input-group">
                             <input class="bg-light form-control border-0 small" type="text" placeholder="Search for ..."
@@ -505,7 +505,7 @@
                                 <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable"><label
                                         class="form-label">Show&nbsp;
                                     <select class="d-inline-block form-select form-select-sm"
-                                            onchange="changeEquipmentSize(this.value)">
+                                            onchange="changePaymentSize(this.value)">
                                         <option value="20" th:selected="${payment.size == 20}">20</option>
                                         <option value="50" th:selected="${payment.size == 50}">50</option>
                                         <option value="100" th:selected="${payment.size == 100}">100</option>

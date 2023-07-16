@@ -1,31 +1,24 @@
 package com.example.gigagym.services;
 
 import com.example.gigagym.models.Equipment;
-import com.example.gigagym.models.Maintenance;
-import com.example.gigagym.models.Staff;
 import com.example.gigagym.repositories.EquipmentRepository;
-import com.example.gigagym.repositories.MaintenanceRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 @Service
 public class EquipmentService {
 
     private final EquipmentRepository equipmentRepository;
-    private final MaintenanceRepository maintenanceRepository;
 
-    public EquipmentService(EquipmentRepository equipmentRepository, MaintenanceRepository maintenanceRepository) {
+    public EquipmentService(EquipmentRepository equipmentRepository) {
         this.equipmentRepository = equipmentRepository;
-        this.maintenanceRepository = maintenanceRepository;
     }
 
     public String getMostCommonEquipmentType() {
@@ -39,7 +32,7 @@ public class EquipmentService {
     }
 
 
-    public void deleteStaff(Long id) {
+    public void deleteEquipment(Long id) {
         equipmentRepository.deleteEquipment(id);
     }
 
@@ -48,4 +41,17 @@ public class EquipmentService {
         Path filePath = Paths.get("src/main/resources/templates/" + pageName + ".html");
         return Files.exists(filePath);
     }
+
+    public Page<Equipment> findEquipmentsByType(String type, Pageable pageable) {
+        Specification<Equipment> spec = (root, query, cb) -> {
+            if (type != null) {
+                return cb.like(root.get("type"), "%" + type + "%");
+            } else {
+                return cb.conjunction();
+            }
+        };
+        return equipmentRepository.findAll(spec, pageable);
+    }
+
+
 }

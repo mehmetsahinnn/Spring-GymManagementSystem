@@ -2,6 +2,7 @@ package com.example.gigagym.controllers;
 
 import com.example.gigagym.models.Payment;
 import com.example.gigagym.repositories.PaymentRepository;
+import com.example.gigagym.services.EquipmentService;
 import com.example.gigagym.services.PaymentService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.data.domain.Pageable;
@@ -11,8 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -21,10 +22,12 @@ public class PaymentController {
 
     private final PaymentService paymentService;
     private final PaymentRepository paymentRepository;
+    private final EquipmentService equipmentService;
 
-    public PaymentController(PaymentService paymentService, PaymentRepository paymentRepository) {
+    public PaymentController(PaymentService paymentService, PaymentRepository paymentRepository, EquipmentService equipmentService) {
         this.paymentService = paymentService;
         this.paymentRepository = paymentRepository;
+        this.equipmentService = equipmentService;
     }
 
     @GetMapping("/payment")
@@ -74,8 +77,17 @@ public class PaymentController {
     }
 
     @DeleteMapping("/deletePayment/{id}")
-    public ResponseEntity<?> deletePayment(@PathVariable Integer id){
+    public ResponseEntity<?> deletePayment(@PathVariable Integer id) {
         paymentRepository.deletePayment(id);
         return ResponseEntity.ok().build();
+    }
+
+    @RequestMapping("/topSearchPayment")
+    public ModelAndView search(@RequestParam("page") String pageName) {
+        if (equipmentService.pageExists(pageName)) {
+            return new ModelAndView("redirect:/" + pageName);
+        } else {
+            return new ModelAndView("redirect:/payment");
+        }
     }
 }

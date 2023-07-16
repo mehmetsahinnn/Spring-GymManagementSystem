@@ -3,7 +3,6 @@ package com.example.gigagym.controllers;
 import com.example.gigagym.models.Staff;
 import com.example.gigagym.repositories.StaffRepository;
 import com.example.gigagym.services.LoginService;
-import com.example.gigagym.services.StaffService;
 import com.example.gigagym.repositories.LoginRepository;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
@@ -13,13 +12,11 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class LoginController {
 
-    private final StaffService staffService;
     private final LoginService loginService;
     public final StaffRepository staffRepository;
     public final LoginRepository loginRepository;
 
-    public LoginController(StaffService staffService, LoginService loginService, StaffRepository staffRepository, LoginRepository loginRepository) {
-        this.staffService = staffService;
+    public LoginController(LoginService loginService, StaffRepository staffRepository, LoginRepository loginRepository) {
         this.loginService = loginService;
         this.staffRepository = staffRepository;
         this.loginRepository = loginRepository;

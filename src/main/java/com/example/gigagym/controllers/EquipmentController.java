@@ -6,6 +6,7 @@ import com.example.gigagym.repositories.EquipmentRepository;
 import com.example.gigagym.repositories.MaintenanceRepository;
 import com.example.gigagym.services.EquipmentService;
 import com.example.gigagym.services.MaintenanceService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -34,23 +35,31 @@ public class EquipmentController {
         this.maintenanceService = maintenanceService;
     }
 
+
     @GetMapping("/equipment")
-    public String table1(Model model, @PageableDefault(size = 100) Pageable pageable, HttpSession session) {
+    public Object table1(Model model, @PageableDefault(size = 250) Pageable pageable, @RequestParam(required = false) String type, HttpSession session, HttpServletRequest request) {
+
         String StaffName = (String) session.getAttribute("StaffName");
         String JobTitle = (String) session.getAttribute("JobTitle");
-
         model.addAttribute("StaffName", StaffName);
-        Page<Equipment> equipment = equipmentRepository.findAll(pageable);
-        model.addAttribute("equipment", equipment);
 
-        if ("Maintenance Guy".equals(JobTitle)) {
+        Page<Equipment> eq = equipmentService.findEquipmentsByType(type, pageable);
+        model.addAttribute("equipment", eq);
 
-            return "redirect:/maintenance";
-        } else if ("Personal Trainer".equals(JobTitle)) {
-            return "redirect:/home";
+
+        String requestedWithHeader = request.getHeader("X-Requested-With");
+        if ("XMLHttpRequest".equals(requestedWithHeader)) {
+            return ResponseEntity.ok(eq);
         } else {
-            return "equipment";
+            if ("Maintenance Guy".equals(JobTitle)) {
+                return "redirect:/maintenance";
+            } else if ("Personal Trainer".equals(JobTitle)) {
+                return "redirect:/home";
+            } else {
+                return "equipment";
+            }
         }
+
     }
 
     @PostMapping("/equipment")
@@ -67,9 +76,27 @@ public class EquipmentController {
         return "redirect:/home";
     }
 
+    @RequestMapping("/searchEquipment/{name}")
+    public ModelAndView searchEquipment(@PathVariable String name) {
+        if (name == null) {
+            return new ModelAndView("redirect:/equipment");
+        }
+        return new ModelAndView("redirect:/equipment?type=" + name);
+    }
+
+    @PostMapping("/updateEquipment")
+    public String updateEquipment(@RequestParam("id") Integer id,
+                                  @RequestParam("type") String type,
+                                  @RequestParam("manufacturer") String manufacturer,
+                                  @RequestParam("model") String model,
+                                  @RequestParam("purchaseDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date purchaseDate) {
+        equipmentRepository.updateEquipment(id, type, manufacturer, model, purchaseDate);
+        return "redirect:/equipment";
+    }
+
     @DeleteMapping("/deleteEquipment/{id}")
     public ResponseEntity<?> deleteStaff(@PathVariable Long id) {
-        equipmentService.deleteStaff(id);
+        equipmentService.deleteEquipment(id);
         return ResponseEntity.ok().build();
     }
 
@@ -109,12 +136,24 @@ public class EquipmentController {
         return ResponseEntity.ok().build();
     }
 
+    @RequestMapping("/topSearchEquipment")
+    public ModelAndView EquipmentPageExists(@RequestParam("page") String pageName) {
+        if (equipmentService.pageExists(pageName)) {
+            return new ModelAndView("redirect:/" + pageName);
+        } else {
+            return new ModelAndView("redirect:/equipment");
+        }
+    }
+
+
     @RequestMapping("/topSearch")
-    public ModelAndView search(@RequestParam("page") String pageName) {
+    public ModelAndView MaintenancePageExists(@RequestParam("page") String pageName) {
         if (equipmentService.pageExists(pageName)) {
             return new ModelAndView("redirect:/" + pageName);
         } else {
             return new ModelAndView("redirect:/maintenance");
         }
     }
+
+
 }

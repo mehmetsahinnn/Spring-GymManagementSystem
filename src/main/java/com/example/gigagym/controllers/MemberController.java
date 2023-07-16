@@ -4,6 +4,7 @@ import com.example.gigagym.models.Member;
 import com.example.gigagym.repositories.MemberRepository;
 import com.example.gigagym.services.EquipmentService;
 import com.example.gigagym.services.MemberService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,30 +21,35 @@ import java.util.Date;
 
 @Controller
 public class MemberController {
-
-
     final MemberRepository memberRepository;
     final EquipmentService equipmentService;
+    final MemberService memberService;
 
     public MemberController(MemberRepository memberRepository, MemberService memberService, EquipmentService equipmentService) {
         this.memberRepository = memberRepository;
         this.equipmentService = equipmentService;
+        this.memberService = memberService;
     }
 
     @GetMapping("/members")
-    public String table(Model model, @PageableDefault(size = 250) Pageable pageable, HttpSession session) {
+    public Object table(Model model, @PageableDefault(size = 250) Pageable pageable, HttpSession session, @RequestParam(required = false) String name, HttpServletRequest request) {
         String StaffName = (String) session.getAttribute("StaffName");
         model.addAttribute("StaffName", StaffName);
         String JobTitle = (String) session.getAttribute("JobTitle");
 
-        Page<Member> page = memberRepository.findMembers(pageable);
+        Page<Member> page = memberService.findMembersByName(name, pageable);
         model.addAttribute("page", page);
 
-        if ("Maintenance Guy".equals(JobTitle)) {
 
-            return "redirect:/maintenance";
+        String requestedWithHeader = request.getHeader("X-Requested-With");
+        if ("XMLHttpRequest".equals(requestedWithHeader)) {
+            return ResponseEntity.ok(page);
         } else {
-            return "members";
+            if ("Maintenance Guy".equals(JobTitle)) {
+                return "redirect:/maintenance";
+            } else {
+                return "members";
+            }
         }
     }
 
@@ -85,7 +91,7 @@ public class MemberController {
     }
 
     @DeleteMapping("/deleteMember/{id}")
-    public ResponseEntity<?> deleteMember(@PathVariable Integer id){
+    public ResponseEntity<?> deleteMember(@PathVariable Integer id) {
         memberRepository.deleteMember(id);
         return ResponseEntity.ok().build();
     }
@@ -98,5 +104,14 @@ public class MemberController {
             return new ModelAndView("redirect:/members");
         }
     }
+
+    @RequestMapping("/searchMember/{name}")
+    public ModelAndView searchMember(@PathVariable String name) {
+        if (name == null) {
+            return new ModelAndView("redirect:/members");
+        }
+        return new ModelAndView("redirect:/members?name=" + name);
+    }
+
 }
 
