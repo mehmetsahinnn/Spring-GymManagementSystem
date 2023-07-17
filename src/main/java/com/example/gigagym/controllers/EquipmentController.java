@@ -6,6 +6,7 @@ import com.example.gigagym.repositories.EquipmentRepository;
 import com.example.gigagym.repositories.MaintenanceRepository;
 import com.example.gigagym.services.EquipmentService;
 import com.example.gigagym.services.MaintenanceService;
+import com.example.gigagym.util.UtilityService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.data.domain.Page;
@@ -27,12 +28,14 @@ public class EquipmentController {
     final EquipmentService equipmentService;
     final MaintenanceRepository maintenanceRepository;
     private final MaintenanceService maintenanceService;
+    final UtilityService utilityService;
 
-    public EquipmentController(EquipmentRepository equipmentRepository, EquipmentService equipmentService, MaintenanceRepository maintenanceRepository, MaintenanceService maintenanceService) {
+    public EquipmentController(EquipmentRepository equipmentRepository, EquipmentService equipmentService, MaintenanceRepository maintenanceRepository, MaintenanceService maintenanceService, UtilityService utilityService) {
         this.equipmentRepository = equipmentRepository;
         this.equipmentService = equipmentService;
         this.maintenanceRepository = maintenanceRepository;
         this.maintenanceService = maintenanceService;
+        this.utilityService = utilityService;
     }
 
 
@@ -95,7 +98,7 @@ public class EquipmentController {
     }
 
     @DeleteMapping("/deleteEquipment/{id}")
-    public ResponseEntity<?> deleteStaff(@PathVariable Long id) {
+    public ResponseEntity<?> deleteStaff(@PathVariable Long id) throws Exception {
         equipmentService.deleteEquipment(id);
         return ResponseEntity.ok().build();
     }
@@ -138,7 +141,7 @@ public class EquipmentController {
 
     @RequestMapping("/topSearchEquipment")
     public ModelAndView EquipmentPageExists(@RequestParam("page") String pageName) {
-        if (equipmentService.pageExists(pageName)) {
+        if (utilityService.pageExists(pageName)) {
             return new ModelAndView("redirect:/" + pageName);
         } else {
             return new ModelAndView("redirect:/equipment");
@@ -148,7 +151,7 @@ public class EquipmentController {
 
     @RequestMapping("/topSearch")
     public ModelAndView MaintenancePageExists(@RequestParam("page") String pageName) {
-        if (equipmentService.pageExists(pageName)) {
+        if (utilityService.pageExists(pageName)) {
             return new ModelAndView("redirect:/" + pageName);
         } else {
             return new ModelAndView("redirect:/maintenance");

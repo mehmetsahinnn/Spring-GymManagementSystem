@@ -1,9 +1,21 @@
 function changeMemberSize(size) {
-    window.location.href = '/member?page=0&size=' + size;
+    let currentUrl = new URL(window.location.href);
+    let name = currentUrl.searchParams.get("name");
+    let newUrl = '/members?page=0&size=' + size;
+    if (name) {
+        newUrl += '&name=' + encodeURIComponent(name);
+    }
+    window.location.href = newUrl;
 }
 
 function changeEquipmentSize(size) {
-    window.location.href = '/equipment?page=0&size=' + size;
+    let currentUrl = new URL(window.location.href);
+    let type = currentUrl.searchParams.get("type");
+    let newUrl = '/equipment?page=0&size=' + size;
+    if (type) {
+        newUrl += '&type=' + encodeURIComponent(type);
+    }
+    window.location.href = newUrl;
 }
 
 function changeMaintenanceSize(size) {

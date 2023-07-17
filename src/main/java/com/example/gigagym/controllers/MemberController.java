@@ -4,13 +4,15 @@ import com.example.gigagym.models.Member;
 import com.example.gigagym.repositories.MemberRepository;
 import com.example.gigagym.services.EquipmentService;
 import com.example.gigagym.services.MemberService;
+import com.example.gigagym.util.UtilityService;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
+
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -24,11 +26,13 @@ public class MemberController {
     final MemberRepository memberRepository;
     final EquipmentService equipmentService;
     final MemberService memberService;
+    final UtilityService utilityService;
 
-    public MemberController(MemberRepository memberRepository, MemberService memberService, EquipmentService equipmentService) {
+    public MemberController(MemberRepository memberRepository, MemberService memberService, EquipmentService equipmentService, UtilityService utilityService) {
         this.memberRepository = memberRepository;
         this.equipmentService = equipmentService;
         this.memberService = memberService;
+        this.utilityService = utilityService;
     }
 
     @GetMapping("/members")
@@ -52,6 +56,7 @@ public class MemberController {
             }
         }
     }
+
 
     @PostMapping("/members")
     public String addMember(
@@ -98,7 +103,7 @@ public class MemberController {
 
     @RequestMapping("/topSearchMember")
     public ModelAndView search(@RequestParam("page") String pageName) {
-        if (equipmentService.pageExists(pageName)) {
+        if (utilityService.pageExists(pageName)) {
             return new ModelAndView("redirect:/" + pageName);
         } else {
             return new ModelAndView("redirect:/members");

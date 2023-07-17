@@ -4,6 +4,7 @@ import com.example.gigagym.models.Staff;
 import com.example.gigagym.repositories.StaffRepository;
 import com.example.gigagym.services.EquipmentService;
 import com.example.gigagym.services.StaffService;
+import com.example.gigagym.util.UtilityService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.data.domain.Page;
@@ -24,13 +25,14 @@ public class StaffController {
 
     private final StaffService staffService;
     private final StaffRepository staffRepository;
-
     private final EquipmentService equipmentService;
+    private final UtilityService utilityService;
 
-    public StaffController(StaffService staffService, StaffRepository staffRepository, EquipmentService equipmentService) {
+    public StaffController(StaffService staffService, StaffRepository staffRepository, EquipmentService equipmentService, UtilityService utilityService) {
         this.staffService = staffService;
         this.staffRepository = staffRepository;
         this.equipmentService = equipmentService;
+        this.utilityService = utilityService;
     }
 
     @GetMapping("/staff")
@@ -60,7 +62,7 @@ public class StaffController {
 
 
     @PostMapping("/staff")
-    public String saveData(@RequestParam("name") String name,
+    public String newStaff(@RequestParam("name") String name,
                            @RequestParam("emailAddress") String emailAddress,
                            @RequestParam("password") String password,
                            @RequestParam("jobTitle") String jobTitle,
@@ -97,7 +99,7 @@ public class StaffController {
 
     @RequestMapping("/topSearchStaff")
     public ModelAndView search(@RequestParam("page") String pageName) {
-        if (equipmentService.pageExists(pageName)) {
+        if (utilityService.pageExists(pageName)) {
             return new ModelAndView("redirect:/" + pageName);
         } else {
             return new ModelAndView("redirect:/staff");

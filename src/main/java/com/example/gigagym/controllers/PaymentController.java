@@ -2,8 +2,8 @@ package com.example.gigagym.controllers;
 
 import com.example.gigagym.models.Payment;
 import com.example.gigagym.repositories.PaymentRepository;
-import com.example.gigagym.services.EquipmentService;
 import com.example.gigagym.services.PaymentService;
+import com.example.gigagym.util.UtilityService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -22,12 +22,13 @@ public class PaymentController {
 
     private final PaymentService paymentService;
     private final PaymentRepository paymentRepository;
-    private final EquipmentService equipmentService;
 
-    public PaymentController(PaymentService paymentService, PaymentRepository paymentRepository, EquipmentService equipmentService) {
+    private final UtilityService utilityService;
+
+    public PaymentController(PaymentService paymentService, PaymentRepository paymentRepository, UtilityService utilityService) {
         this.paymentService = paymentService;
         this.paymentRepository = paymentRepository;
-        this.equipmentService = equipmentService;
+        this.utilityService = utilityService;
     }
 
     @GetMapping("/payment")
@@ -68,7 +69,7 @@ public class PaymentController {
     }
 
     @PostMapping("/payment/update")
-    public String updatePaymentStatus(@RequestParam("paymentId") Long paymentId, HttpSession session) {
+    public String updatePaymentStatus(@RequestParam("paymentId") Long paymentId, HttpSession session) throws Exception {
         double totalPaymentDividedByFive = paymentService.calculateTotalPayment();
         session.setAttribute("totalPaymentDividedByFive", totalPaymentDividedByFive);
 
@@ -84,7 +85,7 @@ public class PaymentController {
 
     @RequestMapping("/topSearchPayment")
     public ModelAndView search(@RequestParam("page") String pageName) {
-        if (equipmentService.pageExists(pageName)) {
+        if (utilityService.pageExists(pageName)) {
             return new ModelAndView("redirect:/" + pageName);
         } else {
             return new ModelAndView("redirect:/payment");

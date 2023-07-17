@@ -14,6 +14,9 @@ import java.util.Date;
 @Repository
 public interface StaffRepository extends JpaRepository<Staff, Integer>, JpaSpecificationExecutor<Staff> {
 
+    Staff findByEmailAddress(String emailAddress);
+
+    Staff findByName(String name);
 
     @Modifying
     @Transactional

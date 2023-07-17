@@ -17,6 +17,8 @@ import java.util.Date;
 public class MemberService {
 
     private final MemberRepository memberRepository;
+    public static final String MALE = "male";
+    public static final String FEMALE = "female";
 
     public MemberService(MemberRepository memberRepository) {
         this.memberRepository = memberRepository;
@@ -53,7 +55,7 @@ public class MemberService {
     }
 
     public double getMaleRatio() {
-        long maleCount = memberRepository.countBySex("male");
+        long maleCount = memberRepository.countBySex(MALE);
         long totalCount = memberRepository.count();
 
         if (totalCount > 0) {
@@ -67,7 +69,7 @@ public class MemberService {
     }
 
     public double getFemaleRatio() {
-        long femaleCount = memberRepository.countBySex("female");
+        long femaleCount = memberRepository.countBySex(FEMALE);
         long totalCount = memberRepository.count();
 
         if (totalCount > 0) {

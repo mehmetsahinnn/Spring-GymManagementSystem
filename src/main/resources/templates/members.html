@@ -229,11 +229,12 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="text-md-end dataTables_filter" id="dataTable_filter">
-                                    <form id="searchForm" method="get" action=""
+                                    <form id="searchFormMember" method="get" action=""
                                           class="d-none d-sm-inline-block me-auto ms-md-3 my-2 my-md-0 mw-100 navbar-search">
                                         <div class="input-group">
                                             <label class="form-label">
-                                                <input type="search" class="form-control form-control-sm" id="nameInput"
+                                                <input type="search" class="form-control form-control-sm"
+                                                       id="nameInputMember"
                                                        aria-controls="dataTable" placeholder="Search">
                                             </label>
                                         </div>
@@ -340,15 +341,16 @@
                                     <ul class="pagination">
                                         <li class="page-item" th:classappend="${page.first ? 'disabled' : ''}">
                                             <a class="page-link"
-                                               th:href="@{/members(page=${page.number - 1})}">Previous</a>
+                                               th:href="@{/members(page=${page.number - 1},size=${page.size})}">Previous</a>
                                         </li>
                                         <li class="page-item" th:each="i : ${#numbers.sequence(0, page.totalPages - 1)}"
                                             th:classappend="${i == page.number ? 'active' : ''}">
-                                            <a class="page-link" th:href="@{/members(page=${i})}"
+                                            <a class="page-link" th:href="@{/members(page=${i},size=${page.size})}"
                                                th:text="${i + 1}"></a>
                                         </li>
                                         <li class="page-item" th:classappend="${page.last ? 'disabled' : ''}">
-                                            <a class="page-link" th:href="@{/members(page=${page.number + 1})}">Next</a>
+                                            <a class="page-link"
+                                               th:href="@{/members(page=${page.number + 1},size=${page.size})}">Next</a>
                                         </li>
                                     </ul>
                                 </nav>
@@ -368,10 +370,10 @@
 </div>
 <script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
 <script th:src="@{/js/bs-init.js}"></script>
-<script th:src="@{/js/theme.js}"></script>
 <script th:src="@{/js/dump.js}"></script>
-<script th:src="@{/js/new.js}"></script>
+<script th:src="@{/js/theme.js}"></script>
 <script th:src="@{/js/member.js}"></script>
+<script th:src="@{/js/new.js}"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
     $(document).ready(function () {

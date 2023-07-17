@@ -1,7 +1,7 @@
 package com.example.gigagym.controllers;
 
+
 import com.example.gigagym.models.Staff;
-import com.example.gigagym.repositories.StaffRepository;
 import com.example.gigagym.services.LoginService;
 import com.example.gigagym.repositories.LoginRepository;
 import jakarta.servlet.http.HttpSession;
@@ -13,34 +13,32 @@ import org.springframework.web.bind.annotation.*;
 public class LoginController {
 
     private final LoginService loginService;
-    public final StaffRepository staffRepository;
     public final LoginRepository loginRepository;
 
-    public LoginController(LoginService loginService, StaffRepository staffRepository, LoginRepository loginRepository) {
+    public LoginController(LoginService loginService, LoginRepository loginRepository) {
         this.loginService = loginService;
-        this.staffRepository = staffRepository;
         this.loginRepository = loginRepository;
     }
 
-@PostMapping("/")
-public String login(@RequestParam("name") String emailAddress,
-                    @RequestParam("password") String password,
-                    Model model,
-                    HttpSession session) {
-    boolean authenticated = loginService.authenticate(emailAddress, password);
+    @PostMapping("/")
+    public String login(@RequestParam("name") String emailAddress,
+                        @RequestParam("password") String password,
+                        Model model,
+                        HttpSession session) {
+        boolean authenticated = loginService.authenticate(emailAddress, password);
 
-    if (authenticated) {
-        Staff staff = loginRepository.findByEmailAddress(emailAddress);
+        if (authenticated) {
+            Staff staff = loginRepository.findByEmailAddress(emailAddress);
 
-        session.setAttribute("StaffName", staff.getName());
-        session.setAttribute("JobTitle", staff.getJobTitle());
+            session.setAttribute("StaffName", staff.getName());
+            session.setAttribute("JobTitle", staff.getJobTitle());
 
-        return "redirect:/home";
-    } else {
-        model.addAttribute("error", "Invalid username or password");
-        return "login";
+            return "redirect:/home";
+        } else {
+            model.addAttribute("error", "Invalid username or password");
+            return "login";
+        }
     }
-}
 
 
     @GetMapping("/")

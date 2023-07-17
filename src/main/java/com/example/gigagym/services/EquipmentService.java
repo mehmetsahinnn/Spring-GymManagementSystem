@@ -11,6 +11,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EquipmentService {
@@ -32,15 +33,15 @@ public class EquipmentService {
     }
 
 
-    public void deleteEquipment(Long id) {
-        equipmentRepository.deleteEquipment(id);
+    public void deleteEquipment(Long id) throws Exception {
+    Optional<Equipment> equipment = equipmentRepository.findById(id);
+    if (equipment.isPresent()) {
+        equipmentRepository.deleteById(id);
+    } else {
+        throw new Exception("Equipment with id " + id + " not found");
     }
+}
 
-
-    public boolean pageExists(String pageName) {
-        Path filePath = Paths.get("src/main/resources/templates/" + pageName + ".html");
-        return Files.exists(filePath);
-    }
 
     public Page<Equipment> findEquipmentsByType(String type, Pageable pageable) {
         Specification<Equipment> spec = (root, query, cb) -> {

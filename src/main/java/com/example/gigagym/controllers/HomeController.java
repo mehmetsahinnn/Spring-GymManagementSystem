@@ -2,6 +2,7 @@ package com.example.gigagym.controllers;
 
 
 import com.example.gigagym.services.*;
+import com.example.gigagym.util.UtilityService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,13 +17,15 @@ public class HomeController {
     private final PaymentService paymentService;
     private final EquipmentService equipmentService;
     private final MaintenanceService maintenanceService;
+    private final UtilityService utilityService;
 
 
-    public HomeController(MemberService memberService, PaymentService paymentService, EquipmentService equipmentService, MaintenanceService maintenanceService) {
+    public HomeController(MemberService memberService, PaymentService paymentService, EquipmentService equipmentService, MaintenanceService maintenanceService, UtilityService utilityService) {
         this.memberService = memberService;
         this.paymentService = paymentService;
         this.equipmentService = equipmentService;
         this.maintenanceService = maintenanceService;
+        this.utilityService = utilityService;
     }
 
     @GetMapping("/home")
@@ -55,7 +58,7 @@ public class HomeController {
 
     @RequestMapping("/topSearchHome")
     public ModelAndView search(@RequestParam("page") String pageName) {
-        if (equipmentService.pageExists(pageName)) {
+        if (utilityService.pageExists(pageName)) {
             return new ModelAndView("redirect:/" + pageName);
         } else {
             return new ModelAndView("redirect:/home");
