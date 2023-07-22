@@ -2,10 +2,15 @@ package com.example.gigagym.models;
 
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.Date;
 
-
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "members")
 public class Member {
@@ -39,9 +44,6 @@ public class Member {
     @Column(name = "endDate")
     private Date endDate;
 
-    public Member() {
-    }
-
     public Member(String name, String sex, String address, String emailAddress, double charge, int ptId, Date startDate, Date endDate) {
         this.name = name;
         this.sex = sex;
@@ -52,77 +54,4 @@ public class Member {
         this.startDate = startDate;
         this.endDate = endDate;
     }
-
-    public Integer getId() {
-        return this.id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return this.name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getSex() {
-        return this.sex;
-    }
-
-    public void setSex(String sex) {
-        this.sex = sex;
-    }
-
-    public String getAddress() {
-        return this.address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getEmailAddress() {
-        return this.emailAddress;
-    }
-
-    public void setEmailAddress(String emailAddress) {
-        this.emailAddress = emailAddress;
-    }
-
-    public double getCharge() {
-        return this.charge;
-    }
-
-    public void setCharge(double charge) {
-        this.charge = charge;
-    }
-
-    public int getPtId() {
-        return this.ptId;
-    }
-
-    public void setPtId(int ptId) {
-        this.ptId = ptId;
-    }
-
-    public Date getStartDate() {
-        return this.startDate;
-    }
-
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
-    }
-
-    public Date getEndDate() {
-        return this.endDate;
-    }
-
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
-    }
-
 }

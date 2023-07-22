@@ -1,9 +1,17 @@
 package com.example.gigagym.models;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "staff")
 public class Staff {
@@ -31,9 +39,12 @@ public class Staff {
     @Column(name = "startDate")
     private Date startDate;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "staff_roles",
+            joinColumns = @JoinColumn(name = "staff_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles = new HashSet<>();
 
-    public Staff() {
-    }
 
     public Staff(String name, String emailAddress,String password, String jobTitle, Integer daysOfWork, Date startDate) {
         this.name = name;
@@ -44,61 +55,13 @@ public class Staff {
         this.startDate = startDate;
     }
 
-
-    public Integer getId() {
-        return id;
+    public void addRole(Role role) {
+        this.roles.add(role);
+        role.getStaffs().add(this);
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void removeRole(Role role) {
+        this.roles.remove(role);
+        role.getStaffs().remove(this);
     }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getEmailAddress() {
-        return emailAddress;
-    }
-
-    public void setEmailAddress(String emailAddress) {
-        this.emailAddress = emailAddress;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getJobTitle() {
-        return jobTitle;
-    }
-
-    public void setJobTitle(String jobTitle) {
-        this.jobTitle = jobTitle;
-    }
-
-    public Integer getDaysOfWork() {
-        return daysOfWork;
-    }
-
-    public void setDaysOfWork(Integer daysOfWork) {
-        this.daysOfWork = daysOfWork;
-    }
-
-    public Date getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
-    }
-
 }

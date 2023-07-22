@@ -1,8 +1,15 @@
 package com.example.gigagym.models;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import java.util.Date;
 
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "equipment")
 public class Equipment {
@@ -24,53 +31,10 @@ public class Equipment {
     @Column(name = "purchaseDate")
     private Date purchaseDate;
 
-    public Equipment() {
-    }
-
     public Equipment(String type, String manufacturer, String model, Date purchaseDate) {
         this.type = type;
         this.manufacturer = manufacturer;
         this.model = model;
-        this.purchaseDate = purchaseDate;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getManufacturer() {
-        return manufacturer;
-    }
-
-    public void setManufacturer(String manufacturer) {
-        this.manufacturer = manufacturer;
-    }
-
-    public String getModel() {
-        return model;
-    }
-
-    public void setModel(String model) {
-        this.model = model;
-    }
-
-    public Date getPurchaseDate() {
-        return purchaseDate;
-    }
-
-    public void setPurchaseDate(Date purchaseDate) {
         this.purchaseDate = purchaseDate;
     }
 }
